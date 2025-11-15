@@ -7,7 +7,7 @@
 
 > **An Intelligent Multi-Agent System for Proactive MDT Case Preparation in Precision Oncology**
 
-Built for the [Google AI Agents Intensive - 5 Day Course Capstone](https://www.kaggle.com/competitions/agents-intensive-capstone) | **Track:** Agents for Good
+Built for the [Google AI Agents Intensive - 5 Day Course Capstone](https://www.kaggle.com/competitions/agents-intensive-capstone-project/overview) | **Track:** Agents for Good
 
 ---
 
