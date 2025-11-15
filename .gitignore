@@ -49,6 +49,7 @@ htmlcov/
 
 # Streamlit
 .streamlit/secrets.toml
+assets/
 
 # Logs
 *.log
