@@ -370,7 +370,7 @@ CORE-adk-capstone/
 
 ### **Test Coverage:**
 
-We created 50 test cases with ground truth labels:
+I created 50 test cases with ground truth labels:
 - **Complete cases** (expected: READY)
 - **Blocked cases** (e.g., unsigned radiology reports)
 - **Cases with actionable genomics**
@@ -494,10 +494,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Contact
 
-**Faith** - PhD Student @ RCSI  
+**Faith Ogundimu** - Research Ireland Postgraduate Scholar @ Royal College of Surgeons Ireland  
 [GitHub](https://github.com/faith-ogun) | [LinkedIn](https://www.linkedin.com/in/faith-ogundimu)
 
-**Project Link**: [https://github.com/YOUR_USERNAME/CORE-adk-capstone](https://github.com/faith-ogun/CORE-adk-capstone)
+**Project Link**: [https://github.com/faith-ogun/CORE-adk-capstone](https://github.com/faith-ogun/CORE-adk-capstone)
 
 **Live Demo**: [https://your-core-app.streamlit.app](https://your-core-app.streamlit.app) (Coming soon)
 
