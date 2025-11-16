@@ -2,7 +2,7 @@
 # Python Dependencies
 
 # Google AI ADK (Agent Development Kit)
-google-genai-adk>=0.1.0  # For Agent, Runner, Tool classes
+google-adk>=0.1.0  # For Agent, Runner, Tool classes
 
 # Google GenAI (underlying SDK)
 google-generativeai>=0.3.0
