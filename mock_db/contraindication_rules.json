@@ -1,0 +1,367 @@
+{
+  "drugs": {
+    "Doxorubicin": {
+      "class": "Anthracycline chemotherapy",
+      "indications": ["Breast cancer (adjuvant/neoadjuvant)", "Various solid tumors"],
+      "absolute_contraindications": [
+        "Severe heart failure (NYHA Class III-IV)",
+        "Recent myocardial infarction (within 6 months)",
+        "Severe arrhythmias",
+        "Previous anthracycline cumulative dose >550 mg/m²",
+        "LVEF <50%"
+      ],
+      "relative_contraindications": [
+        "Hypertension (uncontrolled)",
+        "Prior chest radiation",
+        "Mild-moderate cardiac disease"
+      ],
+      "organ_function_requirements": {
+        "cardiac": {
+          "lvef_min_percentage": 50,
+          "note": "Baseline ECHO/MUGA required"
+        },
+        "hepatic": {
+          "bilirubin_max_mg_dl": 1.2,
+          "alt_max_u_l": 150,
+          "note": "Dose reduce if elevated bilirubin"
+        },
+        "renal": {
+          "note": "No specific renal dose adjustment, but monitor"
+        },
+        "hematologic": {
+          "anc_min_k_ul": 1.5,
+          "platelets_min_k_ul": 100
+        }
+      },
+      "monitoring": [
+        "LVEF assessment before each cycle",
+        "ECG monitoring",
+        "CBC before each cycle"
+      ],
+      "drug_interactions": [
+        "Trastuzumab (increased cardiotoxicity risk)",
+        "Paclitaxel (sequence-dependent - give doxorubicin first)"
+      ]
+    },
+    "Cyclophosphamide": {
+      "class": "Alkylating agent",
+      "indications": ["Breast cancer", "Lymphoma", "Autoimmune disorders"],
+      "absolute_contraindications": [
+        "Severe bone marrow suppression",
+        "Urinary outflow obstruction"
+      ],
+      "relative_contraindications": [
+        "Active infection",
+        "Recent radiation therapy"
+      ],
+      "organ_function_requirements": {
+        "renal": {
+          "creatinine_max_mg_dl": 2.0,
+          "egfr_min_ml_min": 30,
+          "note": "Dose reduce if eGFR 10-50 ml/min"
+        },
+        "hepatic": {
+          "bilirubin_max_mg_dl": 3.0,
+          "note": "Dose reduce if severe hepatic impairment"
+        },
+        "hematologic": {
+          "anc_min_k_ul": 1.5,
+          "platelets_min_k_ul": 100
+        }
+      },
+      "monitoring": [
+        "CBC before each cycle",
+        "Urinalysis (hemorrhagic cystitis risk)",
+        "Renal function"
+      ],
+      "special_precautions": [
+        "Hydration required to prevent hemorrhagic cystitis",
+        "Consider mesna for bladder protection"
+      ]
+    },
+    "Paclitaxel": {
+      "class": "Taxane chemotherapy",
+      "indications": ["Breast cancer", "Ovarian cancer", "Lung cancer"],
+      "absolute_contraindications": [
+        "Severe hypersensitivity to paclitaxel or Cremophor EL",
+        "Baseline neutropenia <1500/μL"
+      ],
+      "relative_contraindications": [
+        "Peripheral neuropathy ≥ Grade 2",
+        "Severe hepatic impairment"
+      ],
+      "organ_function_requirements": {
+        "hepatic": {
+          "bilirubin_max_mg_dl": 1.5,
+          "alt_max_u_l": 200,
+          "note": "Significant dose reduction needed if elevated"
+        },
+        "hematologic": {
+          "anc_min_k_ul": 1.5,
+          "platelets_min_k_ul": 100
+        }
+      },
+      "monitoring": [
+        "Neuropathy assessment each visit",
+        "CBC before each cycle",
+        "LFTs"
+      ],
+      "premedication_required": [
+        "Dexamethasone 20mg PO 12h and 6h before",
+        "Diphenhydramine 50mg IV 30min before",
+        "H2 antagonist (ranitidine/famotidine) 30min before"
+      ],
+      "drug_interactions": [
+        "CYP3A4 inhibitors (increase toxicity)",
+        "CYP3A4 inducers (decrease efficacy)"
+      ]
+    },
+    "Trastuzumab": {
+      "class": "HER2-targeted monoclonal antibody",
+      "indications": ["HER2-positive breast cancer", "HER2-positive gastric cancer"],
+      "requires": "HER2_positive (IHC 3+ or FISH amplified)",
+      "absolute_contraindications": [
+        "Severe heart failure (NYHA Class III-IV)",
+        "LVEF <50%",
+        "Severe pulmonary disease"
+      ],
+      "relative_contraindications": [
+        "Concurrent anthracycline use (significantly increased cardiotoxicity)",
+        "History of cardiac disease",
+        "Elderly patients (>65 years - increased cardiac risk)"
+      ],
+      "organ_function_requirements": {
+        "cardiac": {
+          "lvef_min_percentage": 50,
+          "note": "Baseline ECHO/MUGA required, repeat q3 months"
+        }
+      },
+      "monitoring": [
+        "LVEF assessment every 3 months during treatment",
+        "Infusion reaction monitoring (especially first dose)",
+        "Pulmonary symptoms"
+      ],
+      "warnings": [
+        "BLACK BOX: Cardiomyopathy, infusion reactions, pulmonary toxicity",
+        "Hold for LVEF drop >10% from baseline or LVEF <50%"
+      ],
+      "drug_interactions": [
+        "Anthracyclines (avoid concurrent use - sequential preferred)"
+      ]
+    },
+    "Pertuzumab": {
+      "class": "HER2-targeted monoclonal antibody",
+      "indications": ["HER2-positive breast cancer (in combination with trastuzumab + chemo)"],
+      "requires": "HER2_positive",
+      "absolute_contraindications": [
+        "Pregnancy (Category D - teratogenic)",
+        "Severe heart failure",
+        "LVEF <50%"
+      ],
+      "organ_function_requirements": {
+        "cardiac": {
+          "lvef_min_percentage": 50,
+          "note": "Monitor same as trastuzumab"
+        }
+      },
+      "monitoring": [
+        "LVEF assessment every 3 months",
+        "Pregnancy test before initiation (women of childbearing potential)"
+      ],
+      "warnings": [
+        "Embryo-fetal toxicity - effective contraception required",
+        "Use with trastuzumab increases cardiotoxicity risk"
+      ]
+    },
+    "Alpelisib": {
+      "class": "PI3K inhibitor",
+      "indications": ["PIK3CA-mutated, HR+/HER2- advanced breast cancer"],
+      "requires": "PIK3CA_mutation",
+      "absolute_contraindications": [
+        "Type 1 diabetes mellitus",
+        "Uncontrolled Type 2 diabetes (HbA1c >8%)",
+        "Severe hyperglycemia",
+        "History of Stevens-Johnson syndrome or toxic epidermal necrolysis",
+        "Severe hypersensitivity to alpelisib"
+      ],
+      "relative_contraindications": [
+        "Well-controlled Type 2 diabetes (requires intensive monitoring)",
+        "Pancreatitis history",
+        "Severe renal impairment (eGFR <30)"
+      ],
+      "organ_function_requirements": {
+        "metabolic": {
+          "fasting_glucose_max_mg_dl": 140,
+          "hba1c_max_percentage": 6.5,
+          "note": "Optimize glycemic control before starting"
+        },
+        "renal": {
+          "egfr_min_ml_min": 30,
+          "creatinine_max_mg_dl": 2.0
+        }
+      },
+      "monitoring": [
+        "Fasting glucose weekly x4 weeks, then q4 weeks, then q3 months",
+        "HbA1c at baseline and periodically",
+        "Lipase/amylase (pancreatitis risk)",
+        "Skin toxicity assessment",
+        "Severe diarrhea monitoring"
+      ],
+      "warnings": [
+        "BLACK BOX: Severe hyperglycemia",
+        "Dermatologic reactions (Stevens-Johnson syndrome reported)",
+        "Severe diarrhea - may require dose interruption"
+      ],
+      "drug_interactions": [
+        "P-gp substrates (increased exposure)",
+        "BCRP substrates (increased exposure)"
+      ],
+      "special_management": {
+        "hyperglycemia_protocol": "Metformin or SGLT2 inhibitor may be initiated prophylactically"
+      }
+    },
+    "Carboplatin": {
+      "class": "Platinum-based chemotherapy",
+      "indications": ["Ovarian cancer", "Breast cancer (especially TNBC)", "Lung cancer"],
+      "absolute_contraindications": [
+        "Severe bone marrow suppression",
+        "Significant bleeding",
+        "Severe renal impairment (eGFR <15)"
+      ],
+      "relative_contraindications": [
+        "Hearing impairment",
+        "Peripheral neuropathy",
+        "Prior platinum hypersensitivity (risk increases with subsequent cycles)"
+      ],
+      "organ_function_requirements": {
+        "renal": {
+          "egfr_min_ml_min": 15,
+          "creatinine_max_mg_dl": 3.0,
+          "note": "Dose calculated by Calvert formula using GFR"
+        },
+        "hematologic": {
+          "anc_min_k_ul": 1.5,
+          "platelets_min_k_ul": 100
+        }
+      },
+      "monitoring": [
+        "CBC before each cycle (nadir typically day 21)",
+        "Renal function before each cycle",
+        "Audiometry if high cumulative dose",
+        "Hypersensitivity monitoring (risk increases with >6 cycles)"
+      ],
+      "dosing_note": "AUC-based dosing using Calvert formula: Dose (mg) = Target AUC × (GFR + 25)"
+    },
+    "Palbociclib": {
+      "class": "CDK4/6 inhibitor",
+      "indications": ["HR+/HER2- advanced breast cancer"],
+      "absolute_contraindications": [
+        "Severe hepatic impairment (Child-Pugh Class C)"
+      ],
+      "relative_contraindications": [
+        "Moderate hepatic impairment (dose reduction required)",
+        "QT prolongation (QTc >480ms)"
+      ],
+      "organ_function_requirements": {
+        "hepatic": {
+          "bilirubin_max_mg_dl": 3.0,
+          "alt_max_u_l": 300,
+          "note": "Dose reduce for moderate impairment, avoid in severe"
+        },
+        "hematologic": {
+          "anc_min_k_ul": 1.0,
+          "platelets_min_k_ul": 50,
+          "hemoglobin_min_g_dl": 8.0
+        }
+      },
+      "monitoring": [
+        "CBC on day 1 and day 14 of first 2 cycles, then day 1 of subsequent cycles",
+        "LFTs periodically",
+        "Infections (neutropenia risk)"
+      ],
+      "drug_interactions": [
+        "Strong CYP3A inhibitors (avoid or reduce dose to 75mg)",
+        "Strong CYP3A inducers (avoid - decrease palbociclib levels)"
+      ],
+      "warnings": [
+        "Neutropenia most common toxicity",
+        "Interstitial lung disease (rare but serious)",
+        "QT prolongation (monitor ECG if risk factors)"
+      ]
+    },
+    "Olaparib": {
+      "class": "PARP inhibitor",
+      "indications": ["gBRCA-mutated breast cancer", "Ovarian cancer", "Prostate cancer"],
+      "requires": "gBRCA1_or_BRCA2_mutation",
+      "absolute_contraindications": [
+        "Pregnancy (Category D)",
+        "Breastfeeding"
+      ],
+      "relative_contraindications": [
+        "MDS/AML history (increased risk)",
+        "Severe renal impairment (CrCl <30)"
+      ],
+      "organ_function_requirements": {
+        "renal": {
+          "creatinine_clearance_min_ml_min": 30,
+          "note": "Dose reduce if CrCl 30-50"
+        },
+        "hematologic": {
+          "anc_min_k_ul": 1.5,
+          "platelets_min_k_ul": 100,
+          "hemoglobin_min_g_dl": 10.0
+        }
+      },
+      "monitoring": [
+        "CBC at baseline, monthly x12 months, then periodically",
+        "MDS/AML surveillance",
+        "Pneumonitis symptoms"
+      ],
+      "warnings": [
+        "MDS/AML risk (~1-2% at 5 years)",
+        "Pneumonitis (rare)",
+        "Embryo-fetal toxicity"
+      ],
+      "drug_interactions": [
+        "Strong/moderate CYP3A inhibitors (dose reduce)",
+        "CYP3A inducers (avoid)"
+      ]
+    }
+  },
+  "compatibility_rules": {
+    "AC_regimen": {
+      "name": "Doxorubicin + Cyclophosphamide",
+      "drugs": ["Doxorubicin", "Cyclophosphamide"],
+      "note": "Standard adjuvant regimen. Monitor cardiac function closely."
+    },
+    "TCH_regimen": {
+      "name": "Docetaxel + Carboplatin + Trastuzumab",
+      "drugs": ["Paclitaxel", "Carboplatin", "Trastuzumab"],
+      "note": "HER2-positive regimen. Anthracycline-sparing, lower cardiac toxicity."
+    },
+    "THP_regimen": {
+      "name": "Docetaxel + Trastuzumab + Pertuzumab",
+      "drugs": ["Paclitaxel", "Trastuzumab", "Pertuzumab"],
+      "note": "HER2-positive metastatic first-line"
+    }
+  },
+  "special_population_rules": {
+    "renal_impairment": {
+      "mild": "CrCl 60-89 ml/min - monitor closely, usually no dose adjustment",
+      "moderate": "CrCl 30-59 ml/min - dose reduction required for many agents",
+      "severe": "CrCl <30 ml/min - contraindication for several agents, careful selection required",
+      "high_risk_drugs": ["Carboplatin", "Cyclophosphamide", "Olaparib", "Alpelisib"]
+    },
+    "hepatic_impairment": {
+      "mild": "Bilirubin ≤ULN, AST >ULN or Bilirubin 1-1.5x ULN - monitor",
+      "moderate": "Bilirubin 1.5-3x ULN - dose reduction for many agents",
+      "severe": "Bilirubin >3x ULN - contraindication for several agents",
+      "high_risk_drugs": ["Doxorubicin", "Paclitaxel", "Palbociclib"]
+    },
+    "cardiac_disease": {
+      "contraindicated_drugs": ["Doxorubicin (if LVEF <50%)", "Trastuzumab (if LVEF <50%)"],
+      "high_risk_combinations": ["Doxorubicin + Trastuzumab (sequential preferred)"],
+      "monitoring_required": "Baseline ECHO/MUGA, repeat q3 months on trastuzumab/pertuzumab"
+    }
+  }
+}

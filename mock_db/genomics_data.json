@@ -1,0 +1,149 @@
+{
+  "patient_123": {
+    "patient_id": "123",
+    "test_info": {
+      "test_date": "2023-10-15",
+      "test_type": "FoundationOne CDx",
+      "lab": "Foundation Medicine",
+      "specimen_type": "FFPE tumor tissue",
+      "tumor_purity": "60%"
+    },
+    "mutations": [
+      {
+        "gene": "PIK3CA",
+        "variant": "H1047R",
+        "variant_type": "SNV",
+        "chromosome": "3",
+        "position": 178952085,
+        "ref": "A",
+        "alt": "G",
+        "vaf": 0.42,
+        "tier": "1",
+        "interpretation": "Pathogenic",
+        "cosmic_id": "COSM775",
+        "clinical_significance": "Activating mutation in PI3K pathway, associated with endocrine therapy resistance"
+      },
+      {
+        "gene": "TP53",
+        "variant": "R273H",
+        "variant_type": "SNV",
+        "chromosome": "17",
+        "position": 7577121,
+        "ref": "G",
+        "alt": "A",
+        "vaf": 0.38,
+        "tier": "2",
+        "interpretation": "Pathogenic",
+        "cosmic_id": "COSM10663",
+        "clinical_significance": "Hotspot mutation, loss of tumor suppressor function"
+      }
+    ],
+    "copy_number_alterations": [
+      {
+        "gene": "MYC",
+        "alteration": "Amplification",
+        "copy_number": 6,
+        "interpretation": "Gain"
+      }
+    ],
+    "fusions": [],
+    "tmb": {
+      "value": 5.2,
+      "unit": "mutations/Mb",
+      "percentile": 35,
+      "interpretation": "TMB-Low"
+    },
+    "msi_status": "MSS",
+    "pdl1": {
+      "score": "10%",
+      "test": "22C3 pharmDx",
+      "interpretation": "Low positive"
+    },
+    "homologous_recombination_deficiency": {
+      "status": "Negative",
+      "score": 12
+    }
+  },
+  "patient_456": {
+    "patient_id": "456",
+    "test_info": {
+      "test_date": "2023-09-20",
+      "test_type": "FoundationOne CDx",
+      "lab": "Foundation Medicine",
+      "specimen_type": "FFPE tumor tissue",
+      "tumor_purity": "70%"
+    },
+    "mutations": [
+      {
+        "gene": "ESR1",
+        "variant": "Y537S",
+        "variant_type": "SNV",
+        "chromosome": "6",
+        "position": 152419932,
+        "ref": "A",
+        "alt": "C",
+        "vaf": 0.28,
+        "tier": "1",
+        "interpretation": "Pathogenic",
+        "cosmic_id": "COSM139274",
+        "clinical_significance": "Activating mutation causing constitutive ER activation and endocrine resistance"
+      }
+    ],
+    "copy_number_alterations": [
+      {
+        "gene": "ERBB2",
+        "alteration": "Amplification",
+        "copy_number": 12,
+        "interpretation": "High-level amplification",
+        "clinical_significance": "HER2 positive, targetable with trastuzumab, pertuzumab, T-DM1"
+      },
+      {
+        "gene": "CCND1",
+        "alteration": "Amplification",
+        "copy_number": 8,
+        "interpretation": "Amplification"
+      }
+    ],
+    "fusions": [],
+    "tmb": {
+      "value": 3.1,
+      "unit": "mutations/Mb",
+      "percentile": 22,
+      "interpretation": "TMB-Low"
+    },
+    "msi_status": "MSS",
+    "pdl1": {
+      "score": "5%",
+      "test": "22C3 pharmDx",
+      "interpretation": "Low"
+    },
+    "homologous_recombination_deficiency": {
+      "status": "Negative",
+      "score": 8
+    }
+  },
+  "patient_789": {
+    "status": "NOT_FOUND",
+    "reason": "Genomic testing not ordered - patient just diagnosed, testing pending",
+    "recommendation": "Order FoundationOne CDx or similar comprehensive genomic profiling for TNBC. Consider germline BRCA testing given young age and TNBC subtype."
+  },
+  "patient_234": {
+    "patient_id": "234",
+    "test_info": {
+      "test_date": "2023-09-25",
+      "test_type": "Oncotype DX Breast Recurrence Score",
+      "lab": "Genomic Health",
+      "specimen_type": "FFPE tumor tissue",
+      "tumor_purity": "50%"
+    },
+    "recurrence_score": {
+      "value": 18,
+      "risk_category": "Intermediate",
+      "interpretation": "Intermediate risk of distant recurrence. Chemotherapy benefit uncertain in postmenopausal patients."
+    },
+    "mutations": [],
+    "copy_number_alterations": [],
+    "fusions": [],
+    "note": "Limited genomic profiling via Oncotype DX (21-gene assay). Full NGS not performed given early stage and low-risk clinical features."
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "mdt_info": {
+    "meeting_date": "2025-11-18",
+    "meeting_time": "14:00",
+    "meeting_duration_minutes": 120,
+    "location": "Conference Room A, Oncology Department",
+    "meeting_type": "Breast Cancer Multidisciplinary Team Meeting",
+    "chair": "Dr. Sarah Chen",
+    "attendees": [
+      {
+        "name": "Dr. Sarah Chen",
+        "role": "Medical Oncologist",
+        "specialty": "Breast Medical Oncology"
+      },
+      {
+        "name": "Dr. Michael Torres",
+        "role": "Medical Oncologist",
+        "specialty": "Breast Medical Oncology"
+      },
+      {
+        "name": "Dr. Patricia Williams",
+        "role": "Pathologist",
+        "specialty": "Breast Pathology"
+      },
+      {
+        "name": "Dr. James Smith",
+        "role": "Pathologist",
+        "specialty": "Molecular Pathology"
+      },
+      {
+        "name": "Dr. Elena Martinez",
+        "role": "Radiologist",
+        "specialty": "Breast Imaging"
+      },
+      {
+        "name": "Dr. Robert Johnson",
+        "role": "Radiologist",
+        "specialty": "Body Imaging"
+      },
+      {
+        "name": "Dr. Lisa Anderson",
+        "role": "Breast Surgeon",
+        "specialty": "Surgical Oncology"
+      },
+      {
+        "name": "Dr. David Lee",
+        "role": "Radiation Oncologist",
+        "specialty": "Breast Radiation"
+      },
+      {
+        "name": "Sarah Murphy",
+        "role": "Clinical Nurse Specialist",
+        "specialty": "Breast Cancer Care"
+      },
+      {
+        "name": "Dr. Jennifer Park",
+        "role": "Genetic Counselor",
+        "specialty": "Cancer Genetics"
+      }
+    ]
+  },
+  "patients": [
+    {
+      "patient_id": "123",
+      "mrn": "MRN-2023-001",
+      "case_number": 1,
+      "patient_name": "Patient A",
+      "age": 58,
+      "date_of_birth": "1967-03-15",
+      "diagnosis_summary": "Invasive ductal carcinoma, right breast, ER+/PR+/HER2-, Grade 2, pT2N1a",
+      "case_priority": "Standard",
+      "discussion_points": [
+        "Review final pathology (post-lumpectomy)",
+        "Discuss genomic testing results (PIK3CA mutation detected)",
+        "Decide on adjuvant systemic therapy",
+        "Consider clinical trial eligibility (PI3K inhibitor trials)",
+        "Radiation therapy planning"
+      ],
+      "surgery_date": "2023-11-10",
+      "estimated_discussion_time_minutes": 20,
+      "presenting_oncologist": "Dr. Sarah Chen",
+      "case_complexity": "Medium - genomic findings may impact therapy choice"
+    },
+    {
+      "patient_id": "456",
+      "mrn": "MRN-2023-002",
+      "case_number": 2,
+      "patient_name": "Patient B",
+      "age": 52,
+      "date_of_birth": "1973-07-22",
+      "diagnosis_summary": "Invasive lobular carcinoma, left breast, ER+/PR-/HER2+, Grade 2, pT2N2a",
+      "case_priority": "Standard",
+      "discussion_points": [
+        "Review final pathology (post-mastectomy)",
+        "HER2-positive disease - discuss anti-HER2 therapy options",
+        "Adjuvant chemotherapy regimen selection",
+        "ESR1 mutation detected - implications for endocrine therapy",
+        "Cardiac clearance confirmed (LVEF 62%)"
+      ],
+      "surgery_date": "2023-10-28",
+      "estimated_discussion_time_minutes": 25,
+      "presenting_oncologist": "Dr. Michael Torres",
+      "case_complexity": "Medium - HER2-positive with ESR1 mutation"
+    },
+    {
+      "patient_id": "789",
+      "mrn": "MRN-2023-003",
+      "case_number": 3,
+      "patient_name": "Patient C",
+      "age": 45,
+      "date_of_birth": "1980-04-10",
+      "diagnosis_summary": "Triple-negative invasive ductal carcinoma, right breast, Grade 3, pT2N1mi",
+      "case_priority": "High - TNBC, young age, renal impairment",
+      "discussion_points": [
+        "Triple-negative breast cancer in premenopausal patient",
+        "Chronic kidney disease stage 3a - chemotherapy dose adjustments needed",
+        "BRCA testing pending (germline)",
+        "Genomic testing not yet ordered - discuss need and timing",
+        "Consider immunotherapy-based regimens if PD-L1 positive",
+        "Clinical trial screening for TNBC trials",
+        "Social concerns - single mother, limited support"
+      ],
+      "surgery_date": "2023-11-05",
+      "estimated_discussion_time_minutes": 30,
+      "presenting_oncologist": "Dr. Sarah Chen",
+      "case_complexity": "High - TNBC with comorbidity and social factors",
+      "alerts": [
+        "URGENT: Radiology MRI report unsigned as of 2023-11-15",
+        "WARNING: Renal impairment (eGFR 48) - avoid nephrotoxic agents",
+        "NOTE: Genomic profiling not yet completed - order urgently"
+      ]
+    }
+  ],
+  "meeting_notes": {
+    "preparation_deadline": "2025-11-16T17:00:00",
+    "case_packet_distribution": "All attendees should receive complete case packets 24 hours prior to meeting",
+    "technical_requirements": [
+      "Projector for imaging review",
+      "Access to pathology slides (digital)",
+      "Genomic test reports (when available)",
+      "Clinical trial database access"
+    ],
+    "administrative_notes": "Patient 789 has outstanding imaging report - follow up with radiology before meeting. Genomic testing for Patient 789 should be expedited if possible."
+  },
+  "expected_outcomes": {
+    "patient_123": "Treatment plan with consideration of PIK3CA-targeted therapy",
+    "patient_456": "HER2-directed therapy regimen selected",
+    "patient_789": "TNBC treatment plan with renal-adjusted dosing, pending genomic results"
+  }
+}

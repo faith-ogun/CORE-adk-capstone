@@ -1,0 +1,244 @@
+{
+  "patient_123": {
+    "patient_id": "123",
+    "demographics": {
+      "age": 58,
+      "sex": "Female",
+      "menopausal_status": "Postmenopausal",
+      "ethnicity": "Caucasian"
+    },
+    "diagnosis": {
+      "primary": "Invasive ductal carcinoma, right breast",
+      "stage": "IIA (T2N1aM0)",
+      "date_diagnosed": "2023-11-01"
+    },
+    "comorbidities": [
+      "Type 2 Diabetes Mellitus (well-controlled)",
+      "Hypertension",
+      "Hyperlipidemia"
+    ],
+    "current_medications": [
+      "Metformin 1000mg PO BID",
+      "Lisinopril 10mg PO daily",
+      "Atorvastatin 20mg PO daily",
+      "Aspirin 81mg PO daily"
+    ],
+    "allergies": [
+      "Penicillin (rash)"
+    ],
+    "performance_status": {
+      "ecog": 0,
+      "assessment_date": "2023-11-05",
+      "notes": "Fully active, able to carry on all pre-disease activities without restriction"
+    },
+    "recent_labs": {
+      "date": "2023-11-01",
+      "hemoglobin_g_dl": 13.2,
+      "wbc_k_ul": 7.5,
+      "platelets_k_ul": 245,
+      "creatinine_mg_dl": 0.9,
+      "egfr_ml_min": 75,
+      "alt_u_l": 22,
+      "ast_u_l": 28,
+      "bilirubin_mg_dl": 0.6,
+      "albumin_g_dl": 4.2,
+      "glucose_mg_dl": 118
+    },
+    "vital_signs": {
+      "date": "2023-11-05",
+      "blood_pressure": "132/78",
+      "heart_rate": 72,
+      "temperature_f": 98.4,
+      "weight_kg": 68,
+      "height_cm": 165,
+      "bmi": 25.0
+    },
+    "oncologist": "Dr. Sarah Chen",
+    "oncologist_notes": "Patient presents with newly diagnosed ER+/PR+/HER2- invasive ductal carcinoma. Post-lumpectomy and sentinel node biopsy. Well-motivated and engaged. Excellent performance status. Diabetes well-controlled. Discussed adjuvant chemotherapy followed by endocrine therapy. Patient expresses interest in clinical trials if appropriate. Family history negative for breast/ovarian cancer.",
+    "last_visit": "2023-11-05",
+    "next_appointment": "2023-11-20"
+  },
+  "patient_456": {
+    "patient_id": "456",
+    "demographics": {
+      "age": 52,
+      "sex": "Female",
+      "menopausal_status": "Perimenopausal",
+      "ethnicity": "Asian"
+    },
+    "diagnosis": {
+      "primary": "Invasive lobular carcinoma, left breast",
+      "stage": "IIB (T2N2aM0)",
+      "date_diagnosed": "2023-10-15"
+    },
+    "comorbidities": [
+      "Hypothyroidism",
+      "Anxiety disorder"
+    ],
+    "current_medications": [
+      "Levothyroxine 75mcg PO daily",
+      "Sertraline 50mg PO daily",
+      "Multivitamin daily"
+    ],
+    "allergies": [
+      "No known drug allergies"
+    ],
+    "performance_status": {
+      "ecog": 1,
+      "assessment_date": "2023-10-25",
+      "notes": "Restricted in physically strenuous activity but ambulatory and able to carry out light work"
+    },
+    "recent_labs": {
+      "date": "2023-10-20",
+      "hemoglobin_g_dl": 12.8,
+      "wbc_k_ul": 6.2,
+      "platelets_k_ul": 198,
+      "creatinine_mg_dl": 0.8,
+      "egfr_ml_min": 92,
+      "alt_u_l": 18,
+      "ast_u_l": 24,
+      "bilirubin_mg_dl": 0.5,
+      "albumin_g_dl": 4.0,
+      "tsh_miu_l": 2.1
+    },
+    "cardiac_function": {
+      "date": "2023-10-22",
+      "lvef_percentage": 62,
+      "method": "Echocardiogram",
+      "notes": "Normal left ventricular systolic function, no valvular abnormalities"
+    },
+    "vital_signs": {
+      "date": "2023-10-25",
+      "blood_pressure": "118/72",
+      "heart_rate": 68,
+      "temperature_f": 98.2,
+      "weight_kg": 58,
+      "height_cm": 160,
+      "bmi": 22.7
+    },
+    "oncologist": "Dr. Michael Torres",
+    "oncologist_notes": "52yo F with ER+/HER2+ invasive lobular carcinoma, post-mastectomy. HER2 positivity confirmed on resection (IHC 3+). Discussed neoadjuvant vs adjuvant approach. Patient opted for upfront surgery. Now planning adjuvant chemotherapy + trastuzumab followed by endocrine therapy. LVEF normal (62%), cleared for trastuzumab. Anxiety well-controlled on sertraline. Strong family support system.",
+    "last_visit": "2023-10-25",
+    "next_appointment": "2023-11-15"
+  },
+  "patient_789": {
+    "patient_id": "789",
+    "demographics": {
+      "age": 45,
+      "sex": "Female",
+      "menopausal_status": "Premenopausal",
+      "ethnicity": "African American"
+    },
+    "diagnosis": {
+      "primary": "Triple-negative invasive ductal carcinoma, right breast",
+      "stage": "IIA (T2N1miM0)",
+      "date_diagnosed": "2023-10-28"
+    },
+    "comorbidities": [
+      "Chronic kidney disease Stage 3a",
+      "Vitamin D deficiency",
+      "Obesity (BMI 31.2)"
+    ],
+    "current_medications": [
+      "Cholecalciferol 2000 IU PO daily",
+      "Calcium carbonate 500mg PO BID"
+    ],
+    "allergies": [
+      "Sulfa drugs (Stevens-Johnson syndrome)",
+      "Codeine (nausea)"
+    ],
+    "performance_status": {
+      "ecog": 1,
+      "assessment_date": "2023-11-08",
+      "notes": "Ambulatory, occasional fatigue. Some difficulty with prolonged standing due to knee pain. Otherwise functional."
+    },
+    "recent_labs": {
+      "date": "2023-11-03",
+      "hemoglobin_g_dl": 11.2,
+      "wbc_k_ul": 5.8,
+      "platelets_k_ul": 176,
+      "creatinine_mg_dl": 1.4,
+      "egfr_ml_min": 48,
+      "alt_u_l": 28,
+      "ast_u_l": 32,
+      "bilirubin_mg_dl": 0.7,
+      "albumin_g_dl": 3.8,
+      "vitamin_d_ng_ml": 18
+    },
+    "vital_signs": {
+      "date": "2023-11-08",
+      "blood_pressure": "145/88",
+      "heart_rate": 78,
+      "temperature_f": 98.6,
+      "weight_kg": 82,
+      "height_cm": 162,
+      "bmi": 31.2
+    },
+    "oncologist": "Dr. Sarah Chen",
+    "oncologist_notes": "45yo premenopausal F with triple-negative breast cancer, high-grade. Post-lumpectomy with micrometastatic sentinel node. IMPORTANT: Chronic kidney disease stage 3a (eGFR 48) - will require dose adjustments and careful nephrotoxic drug avoidance. Discussed neoadjuvant vs adjuvant chemotherapy. Patient strongly prefers adjuvant approach. BRCA testing pending. Discussed clinical trial options for TNBC. Patient interested in immunotherapy trials if eligible. Social concerns: single mother of 2, limited family support.",
+    "social_history": {
+      "smoking": "Never smoker",
+      "alcohol": "Rare",
+      "occupation": "Teacher",
+      "dependents": "2 children (ages 8, 12)"
+    },
+    "last_visit": "2023-11-08",
+    "next_appointment": "2023-11-18"
+  },
+  "patient_234": {
+    "patient_id": "234",
+    "demographics": {
+      "age": 67,
+      "sex": "Female",
+      "menopausal_status": "Postmenopausal",
+      "ethnicity": "Hispanic"
+    },
+    "diagnosis": {
+      "primary": "Invasive ductal carcinoma, left breast",
+      "stage": "IA (T1N0M0)",
+      "date_diagnosed": "2023-09-10"
+    },
+    "comorbidities": [
+      "Atrial fibrillation",
+      "Osteoporosis"
+    ],
+    "current_medications": [
+      "Warfarin 5mg PO daily",
+      "Metoprolol 25mg PO BID",
+      "Alendronate 70mg PO weekly",
+      "Calcium + Vitamin D supplement"
+    ],
+    "allergies": [
+      "No known drug allergies"
+    ],
+    "performance_status": {
+      "ecog": 1,
+      "assessment_date": "2023-09-15",
+      "notes": "Ambulatory, slightly restricted due to age"
+    },
+    "recent_labs": {
+      "date": "2023-09-12",
+      "hemoglobin_g_dl": 12.5,
+      "wbc_k_ul": 6.8,
+      "platelets_k_ul": 210,
+      "creatinine_mg_dl": 1.0,
+      "egfr_ml_min": 62,
+      "alt_u_l": 25,
+      "ast_u_l": 30,
+      "inr": 2.3
+    },
+    "vital_signs": {
+      "date": "2023-09-15",
+      "blood_pressure": "128/76",
+      "heart_rate": 64,
+      "temperature_f": 98.1,
+      "weight_kg": 71,
+      "height_cm": 158,
+      "bmi": 28.4
+    },
+    "oncologist": "Dr. Michael Torres",
+    "oncologist_notes": "Early-stage ER+/PR+/HER2- breast cancer. Post-lumpectomy, margins clear, nodes negative. Excellent candidate for de-escalated treatment. Considering endocrine therapy alone vs addition of adjuvant chemotherapy. Oncotype DX pending to guide decision. On warfarin for Afib - will need careful coordination if chemotherapy planned.",
+    "last_visit": "2023-09-15",
+    "next_appointment": "2023-11-25"
+  }
+}
