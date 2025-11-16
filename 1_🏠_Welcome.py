@@ -5,7 +5,7 @@ from datetime import datetime
 # -------------------------- Page config & styling --------------------------
 st.set_page_config(
     page_title="C.O.R.E. - MDT Readiness System",
-    page_icon="🎯",
+    page_icon="./assets/favicon.png",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -264,17 +264,18 @@ st.image("./assets/hero_image.png", use_container_width=True)
 # Description below hero
 st.markdown(f"""
 <div style="text-align: center; padding: 2rem 1rem; max-width: 900px; margin: 0 auto;">
-    <p style="color: #374151; font-size: 1.2rem; line-height: 1.8; margin-bottom: 1rem;">
+    <p style="color: #374151; font-size: 2rem; line-height: 1.8; margin-bottom: 0.5rem;">
+        Coordinated Oncology Readiness Engine (C.O.R.E.)
+    </p>
+    <p style="color: #374151; font-size: 1.15rem; line-height: 1.8; margin-top: 0;">
         An intelligent multi-agent system that autonomously prepares cancer MDT cases 48 hours before meetings,
         ensuring 100% case readiness while providing AI-powered genomic intelligence for precision medicine decisions.
     </p>
-    <p style="color: #94a3b8; font-size: 1rem; font-style: italic;">
+    <p style="color: #94a3b8; font-size: 1rem; font-style: italic; margin-top: 0.5rem;">
         Active Development • Last updated: {datetime.now().strftime("%B %d, %Y")}
     </p>
 </div>
 """, unsafe_allow_html=True)
-
-st.markdown("<br/>", unsafe_allow_html=True)
 
 # Key Metrics Section
 st.markdown("""
@@ -614,13 +615,10 @@ st.markdown(f"""
         C.O.R.E. - Coordinated Oncology Readiness Engine
     </div>
     <div style="color: #64748b; font-size: 1rem;">
-        Developed by <strong style="color: #004e89;">Faith Ogundimu</strong> • PhD Student @ RCSI
+        Developed by <strong style="color: #004e89;">Faith Ogundimu</strong> • Research Ireland Postgraduate Scholar @ RCSI
     </div>
     <div style="color: #94a3b8; font-size: 0.9rem; margin-top: 0.5rem;">
         Built for Google AI Agents Intensive Capstone • Track: Agents for Good
-    </div>
-    <div style="color: #cbd5e1; font-size: 0.85rem; margin-top: 1rem; font-style: italic;">
-        © {datetime.now().year} • Advancing MDT efficiency through multi-agent systems
     </div>
 </div>
 """, unsafe_allow_html=True)
