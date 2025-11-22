@@ -14,6 +14,7 @@ import json
 import logging
 import os
 import asyncio
+from pathlib import Path
 from typing import Dict, List, Optional, Any
 
 # Google ADK imports
@@ -87,7 +88,7 @@ class CaseAgent:
             
             Args:
                 category: 'Clinical_Notes', 'Pathology_Report', 'Radiology_Report', 'Radiology_Images', or 'Genomics_Profile'
-                status: 'COMPLETE', 'PARTIAL', 'MISSING', or 'NOT_APPLICABLE'
+                status: 'COMPLETE', 'PARTIAL', 'MISSING', 'BLOCKER', or 'NOT_APPLICABLE'
                 summary: A brief summary of the data found.
             """
             if category not in self.readiness_state["checklist"]:
@@ -96,10 +97,16 @@ class CaseAgent:
             self.readiness_state["checklist"][category]["status"] = status
             self.readiness_state["checklist"][category]["data"] = summary
             
-            # Auto-update overall status if all complete
+            # Auto-update overall status
             all_complete = all(v["status"] == "COMPLETE" for k,v in self.readiness_state["checklist"].items())
-            if all_complete:
+            has_blockers = any(v["status"] == "BLOCKER" for k,v in self.readiness_state["checklist"].items())
+            
+            if has_blockers:
+                self.readiness_state["overall_status"] = "BLOCKED"
+            elif all_complete:
                 self.readiness_state["overall_status"] = "READY"
+            else:
+                self.readiness_state["overall_status"] = "IN_PROGRESS"
                 
             logger.info(f"[{self.patient_id}] Updated {category} -> {status}")
             return {"status": "success", "current_state": self.readiness_state["checklist"][category]}
@@ -114,7 +121,7 @@ class CaseAgent:
 
         def request_specialist_data(specialist_type: str, query_details: str) -> dict:
             """
-            Simulates A2A request to a Specialist Agent.
+            Requests data from specialist agents by reading actual data files.
             
             Args:
                 specialist_type: 'EHR', 'Pathology', 'Radiology', 'Genomics'
@@ -122,33 +129,212 @@ class CaseAgent:
             """
             logger.info(f"[{self.patient_id}] A2A Request -> {specialist_type}: {query_details}")
             
-            # --- MOCK DATA RESPONSES (Based on your Project Plan) ---
-            if specialist_type == "Genomics":
-                return {
-                    "source": "GenomicsIntelligenceAgent",
-                    "status": "FOUND",
-                    "content": {
-                        "mutation": "PIK3CA H1047R",
-                        "significance": "Actionable",
-                        "clinical_trials": ["NCT04305496 (Capivasertib)"],
-                        "evidence": "André et al., NEJM 2019"
-                    }
-                }
-            elif specialist_type == "Pathology":
-                return {
-                    "source": "PathologyAgent",
-                    "status": "FOUND",
-                    "content": "Invasive ductal carcinoma, Grade 2, ER+/PR+/HER2-"
-                }
-            elif specialist_type == "EHR":
-                return {
-                    "source": "EHRAgent",
-                    "status": "FOUND",
-                    "content": "58F, Hx: Hypertension. Meds: Amlodipine."
-                }
+            # Determine base path for data files
+            # Assumes data files are in mock_db/ relative to project root
+            base_path = Path(__file__).parent.parent / "mock_db"
             
-            # Default mock for others
-            return {"status": "FOUND", "content": f"Mock data from {specialist_type}"}
+            try:
+                if specialist_type == "Genomics":
+                    genomics_file = base_path / "genomics_data.json"
+                    if not genomics_file.exists():
+                        return {"status": "ERROR", "content": f"Genomics data file not found at {genomics_file}"}
+                    
+                    with open(genomics_file, 'r') as f:
+                        genomics_data = json.load(f)
+                    
+                    patient_key = f"patient_{self.patient_id}"
+                    if patient_key not in genomics_data:
+                        return {
+                            "source": "GenomicsIntelligenceAgent",
+                            "status": "NOT_FOUND",
+                            "content": f"No genomic data available for patient {self.patient_id}"
+                        }
+                    
+                    patient_genomics = genomics_data[patient_key]
+                    
+                    # Check if testing wasn't done
+                    if patient_genomics.get("status") == "NOT_FOUND":
+                        return {
+                            "source": "GenomicsIntelligenceAgent",
+                            "status": "NOT_FOUND",
+                            "content": patient_genomics.get("reason", "Genomic testing not completed"),
+                            "recommendation": patient_genomics.get("recommendation", "")
+                        }
+                    
+                    # Format the genomics findings
+                    mutations_summary = []
+                    for mut in patient_genomics.get("mutations", []):
+                        mutations_summary.append(f"{mut['gene']} {mut['variant']} ({mut['interpretation']})")
+                    
+                    cna_summary = []
+                    for cna in patient_genomics.get("copy_number_alterations", []):
+                        cna_summary.append(f"{cna['gene']} {cna['alteration']}")
+                    
+                    content = {
+                        "test_info": patient_genomics.get("test_info", {}),
+                        "mutations": mutations_summary,
+                        "copy_number_alterations": cna_summary,
+                        "tmb": patient_genomics.get("tmb", {}),
+                        "msi_status": patient_genomics.get("msi_status", "Unknown"),
+                        "raw_data": patient_genomics
+                    }
+                    
+                    return {
+                        "source": "GenomicsIntelligenceAgent",
+                        "status": "FOUND",
+                        "content": content
+                    }
+                
+                elif specialist_type == "Pathology":
+                    import sqlite3
+                    pathology_db = base_path / "pathology_db.sqlite"
+                    if not pathology_db.exists():
+                        return {"status": "ERROR", "content": f"Pathology database not found at {pathology_db}"}
+                    
+                    conn = sqlite3.connect(str(pathology_db))
+                    cursor = conn.cursor()
+                    
+                    # Get the most recent pathology report for this patient
+                    cursor.execute('''
+                        SELECT diagnosis, histological_type, grade, er_status, pr_status, her2_status, 
+                               ki67_percentage, nodes_positive, nodes_examined, margins, full_report_text
+                        FROM pathology_reports 
+                        WHERE patient_id = ?
+                        ORDER BY signed_date DESC
+                        LIMIT 1
+                    ''', (self.patient_id,))
+                    
+                    row = cursor.fetchone()
+                    conn.close()
+                    
+                    if not row:
+                        return {
+                            "source": "PathologyAgent",
+                            "status": "NOT_FOUND",
+                            "content": f"No pathology report found for patient {self.patient_id}"
+                        }
+                    
+                    diagnosis, histological_type, grade, er, pr, her2, ki67, nodes_pos, nodes_exam, margins, full_text = row
+                    
+                    summary = f"{diagnosis}, {histological_type}, Grade {grade}, ER: {er}, PR: {pr}, HER2: {her2}"
+                    if nodes_pos is not None and nodes_exam is not None:
+                        summary += f", Nodes: {nodes_pos}/{nodes_exam}"
+                    if ki67 is not None:
+                        summary += f", Ki67: {ki67}%"
+                    
+                    return {
+                        "source": "PathologyAgent",
+                        "status": "FOUND",
+                        "content": summary,
+                        "full_report": full_text
+                    }
+                
+                elif specialist_type == "Radiology":
+                    import csv
+                    radiology_file = base_path / "radiology_scans.csv"
+                    if not radiology_file.exists():
+                        return {"status": "ERROR", "content": f"Radiology data file not found at {radiology_file}"}
+                    
+                    # Check if we're looking for reports or images
+                    looking_for_images = "image" in query_details.lower()
+                    
+                    with open(radiology_file, 'r') as f:
+                        reader = csv.DictReader(f)
+                        patient_scans = [row for row in reader if row['patient_id'] == self.patient_id]
+                    
+                    if not patient_scans:
+                        return {
+                            "source": "RadiologyAgent",
+                            "status": "NOT_FOUND",
+                            "content": f"No radiology scans found for patient {self.patient_id}"
+                        }
+                    
+                    if looking_for_images:
+                        # Return list of available scans
+                        scan_list = [f"{scan['scan_date']} - {scan['modality']} - {scan['body_part']}" for scan in patient_scans]
+                        return {
+                            "source": "RadiologyAgent",
+                            "status": "FOUND",
+                            "content": f"Available scans: {', '.join(scan_list)}"
+                        }
+                    else:
+                        # Check for ANY unsigned reports - these are blockers
+                        unsigned_scans = [s for s in patient_scans if s['report_status'] == 'DRAFT']
+                        if unsigned_scans:
+                            # Flag the unsigned report as a blocker
+                            unsigned_details = []
+                            for scan in unsigned_scans:
+                                unsigned_details.append(
+                                    f"{scan['scan_date']} {scan['modality']} ({scan['body_part']})"
+                                )
+                            return {
+                                "source": "RadiologyAgent",
+                                "status": "BLOCKER",
+                                "content": f"UNSIGNED REPORT(S) DETECTED: {', '.join(unsigned_details)}",
+                                "alert": f"Critical: {len(unsigned_scans)} radiology report(s) awaiting signature",
+                                "details": unsigned_scans[0]['findings_summary'] if unsigned_scans else None
+                            }
+                        
+                        # Only return signed reports if no unsigned reports exist
+                        signed_scans = [s for s in patient_scans if s['report_status'] == 'SIGNED']
+                        if not signed_scans:
+                            return {
+                                "source": "RadiologyAgent",
+                                "status": "NOT_FOUND",
+                                "content": f"No radiology reports available for patient {self.patient_id}"
+                            }
+                        
+                        most_recent = signed_scans[-1]
+                        return {
+                            "source": "RadiologyAgent",
+                            "status": "FOUND",
+                            "content": f"{most_recent['scan_date']} {most_recent['modality']}: {most_recent['findings_summary']}"
+                        }
+                
+                elif specialist_type == "EHR":
+                    clinical_file = base_path / "clinical_notes.json"
+                    if not clinical_file.exists():
+                        return {"status": "ERROR", "content": f"Clinical notes file not found at {clinical_file}"}
+                    
+                    with open(clinical_file, 'r') as f:
+                        clinical_data = json.load(f)
+                    
+                    patient_key = f"patient_{self.patient_id}"
+                    if patient_key not in clinical_data:
+                        return {
+                            "source": "EHRAgent",
+                            "status": "NOT_FOUND",
+                            "content": f"No clinical notes found for patient {self.patient_id}"
+                        }
+                    
+                    patient = clinical_data[patient_key]
+                    demo = patient.get("demographics", {})
+                    dx = patient.get("diagnosis", {})
+                    comorbid = patient.get("comorbidities", [])
+                    meds = patient.get("current_medications", [])
+                    allergies = patient.get("allergies", [])
+                    
+                    summary = f"{demo.get('age')}yo {demo.get('sex')}, {demo.get('menopausal_status')}"
+                    summary += f"\nDiagnosis: {dx.get('primary')} (Stage {dx.get('stage')})"
+                    if comorbid:
+                        summary += f"\nComorbidities: {', '.join(comorbid)}"
+                    if allergies:
+                        summary += f"\nAllergies: {', '.join(allergies)}"
+                    summary += f"\nECOG: {patient.get('performance_status', {}).get('ecog')}"
+                    
+                    return {
+                        "source": "EHRAgent",
+                        "status": "FOUND",
+                        "content": summary,
+                        "full_data": patient
+                    }
+                
+                else:
+                    return {"status": "ERROR", "content": f"Unknown specialist type: {specialist_type}"}
+                    
+            except Exception as e:
+                logger.exception(f"[{self.patient_id}] Error fetching {specialist_type} data: {e}")
+                return {"status": "ERROR", "content": str(e)}
 
         # --- System Instruction ---
         instruction = f"""
@@ -161,9 +347,13 @@ class CaseAgent:
            - Pathology_Report -> 'Pathology'
            - Radiology_Report / Images -> 'Radiology'
            - Genomics_Profile -> 'Genomics'
-        3. When you receive data, ANALYZE it briefly, then call `update_checklist` to mark it COMPLETE.
+        3. When you receive data, check the response status:
+           - If status is "FOUND": Call `update_checklist` with status='COMPLETE'
+           - If status is "BLOCKER": Call `update_checklist` with status='BLOCKER' AND call `flag_blocker` with the reason
+           - If status is "NOT_FOUND": Call `update_checklist` with status='PENDING' to note the issue
+           - If status is "ERROR": Call `flag_blocker`
         4. If `Genomics` returns actionable mutations, explicitly mention them in the summary.
-        5. If data is missing/error, call `flag_blocker`.
+        5. CRITICAL: Always check if the specialist response has status='BLOCKER' - this means critical data is missing or unsigned.
         6. Stop when all items are checked.
         """
 
