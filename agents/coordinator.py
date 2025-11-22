@@ -9,7 +9,7 @@ This agent uses Google's Agent Development Kit (ADK) to:
 5. Provide observability via tracing
 
 Author: Faith Ogundimu
-Created: November 2024
+Created: November 2025
 """
 
 import json
@@ -30,6 +30,15 @@ from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.adk.tools.function_tool import FunctionTool
 from google.adk.tools.tool_context import ToolContext
+
+try:
+    # When running from test_system.py (root)
+    from agents.case_agent import CaseAgent
+except ImportError:
+    # Fallback if running inside the folder
+    from case_agent import CaseAgent
+
+import asyncio
 
 # Load environment variables from .env file
 load_dotenv()
@@ -325,72 +334,34 @@ class CoordinatorAgent:
             return False
 
     def spawn_case_agents(self) -> bool:
-        """
-        Stub: spawn CaseAgents for each patient.
-
-        For now, this just records that a CaseAgent would be created per
-        patient_id and returns True so that the smoke test can proceed.
-
-        Returns:
-            True if stub completed successfully, False otherwise.
-        """
         try:
             if not self.patients:
-                logger.warning(
-                    "spawn_case_agents called but no patients are loaded."
-                )
+                logger.warning("No patients loaded.")
                 return False
 
-            # Stub: Just record patient ids; real implementation would
-            # create sub-agents, probably also LlmAgents.
             for patient in self.patients:
                 pid = patient.get("patient_id")
-                if not pid:
-                    continue
-                # Placeholder: None stands in for a real CaseAgent instance
-                self.case_agents[pid] = None
+                if not pid: continue
 
-            logger.info(
-                "spawn_case_agents stub: %s CaseAgents marked as created",
-                len(self.case_agents),
-            )
+                # Instantiate the real CaseAgent
+                self.case_agents[pid] = CaseAgent(
+                    patient_id=pid,
+                    mdt_date=self.mdt_info.get("meeting_date", "Unknown")
+                )
+
+            logger.info(f"Spawned {len(self.case_agents)} CaseAgents.")
             return True
         except Exception as e:
-            logger.exception("Error in spawn_case_agents: %s", e)
+            logger.exception(f"Error spawning agents: {e}")
             return False
 
-    def run_case_preparation(self) -> Dict[str, Dict]:
-        """
-        Stub: run case preparation for each patient.
-
-        In this local-only mode, we do NOT call ADK/LLM. Instead, we return
-        a simple structure marking all cases as PENDING with 0% readiness.
-
-        Returns:
-            Dict keyed by patient_id with:
-              - status
-              - readiness_percentage
-        """
-        results: Dict[str, Dict] = {}
-
-        if not self.patients:
-            logger.warning(
-                "run_case_preparation called but no patients are loaded."
-            )
-            return results
-
-        for patient in self.patients:
-            pid = patient.get("patient_id")
-            if not pid:
-                continue
-            results[pid] = {
-                "status": "PENDING",
-                "readiness_percentage": 0,
-                "notes": "CaseAgent logic not yet implemented; placeholder only.",
-            }
-
-        self.results = results
-        logger.info("run_case_preparation stub produced %s results", len(results))
+    async def run_case_preparation_async(self): 
+        results = {}
+        for pid, agent in self.case_agents.items():
+            if agent:
+                # Run the agent's logic
+                state = await agent.run_check()
+                results[pid] = state
         return results
 
 
