@@ -268,8 +268,9 @@ st.markdown(f"""
         Coordinated Oncology Readiness Engine (C.O.R.E.)
     </p>
     <p style="color: #374151; font-size: 1.15rem; line-height: 1.8; margin-top: 0;">
-        An intelligent multi-agent system that autonomously prepares cancer MDT cases 48 hours before meetings,
-        ensuring 100% case readiness while providing AI-powered genomic intelligence for precision medicine decisions.
+        A multi-agent system that automatically prepares cancer MDT cases ahead of meetings,
+        aiming to maximise case readiness and lay the groundwork for AI-powered genomic intelligence
+        to support precision medicine decisions.
     </p>
     <p style="color: #94a3b8; font-size: 1rem; font-style: italic; margin-top: 0.5rem;">
         Active Development • Last updated: {datetime.now().strftime("%B %d, %Y")}
@@ -277,7 +278,7 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# Key Metrics Section
+# Key Metrics Section (framed as targets, not current measured performance)
 st.markdown("""
 <div class="stats-container">
     <div class="stat-card">
@@ -286,15 +287,15 @@ st.markdown("""
     </div>
     <div class="stat-card">
         <div class="stat-value">70%</div>
-        <div class="stat-label">Time Reduction<br/>(MDT Prep)</div>
+        <div class="stat-label">Target Time Reduction<br/>(MDT Prep)</div>
     </div>
     <div class="stat-card">
         <div class="stat-value">6.8s</div>
-        <div class="stat-label">Avg Processing<br/>(Per Case)</div>
+        <div class="stat-label">Target Avg Processing<br/>(Per Case)</div>
     </div>
     <div class="stat-card">
         <div class="stat-value">87%</div>
-        <div class="stat-label">Actionable Genomics<br/>(Breast Cancer)</div>
+        <div class="stat-label">Planned Actionable Genomics<br/>(Breast Cancer)</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -326,11 +327,11 @@ with col2:
         <div class="feature-title">C.O.R.E. Solution</div>
         <div class="feature-description">
             <ul style="margin: 0; padding-left: 1.5rem;">
-                <li><strong>Autonomous agents</strong> proactively assemble case data</li>
-                <li><strong>Real-time validation</strong> of data completeness</li>
-                <li><strong>AI-powered genomics</strong> interpretation with Gemini 2.0</li>
-                <li><strong>Clinical trial matching</strong> via real external APIs</li>
-                <li><strong>Evidence-based recommendations</strong> with citations</li>
+                <li><strong>Multi-agent workflow</strong> to assemble case data</li>
+                <li><strong>Automated validation</strong> of data completeness</li>
+                <li><strong>Planned</strong> AI-powered genomics interpretation with Gemini 2.0</li>
+                <li><strong>Planned</strong> clinical trial matching via external APIs</li>
+                <li><strong>Evidence-based recommendations</strong> as a future extension</li>
             </ul>
         </div>
     </div>
@@ -343,22 +344,22 @@ st.markdown('<h2 class="section-header">Multi-Agent Architecture</h2>', unsafe_a
 agent_features = [
     {
         "title": "CoordinatorAgent",
-        "description": "Orchestrates the entire workflow using Gemini 2.0 Flash. Spawns Case Agents for each patient, monitors progress, manages sessions, and generates the final readiness dashboard.",
-        "badges": ["Gemini 2.0", "Session Management", "A2A Protocol"]
+        "description": "Deterministic Python orchestrator that loads the MDT roster, spawns CaseAgents for each patient, runs them, and generates the final readiness dashboard.",
+        "badges": ["Orchestration", "MDT Dashboard", "Deterministic"]
     },
     {
         "title": "Autonomous CaseAgents",
-        "description": "Goal-oriented agents (one per patient) that autonomously request data, validate completeness, handle conflicts, and escalate blockers. Each agent uses LLM reasoning to make intelligent decisions.",
-        "badges": ["Goal-Oriented", "LLM Reasoning", "Autonomous"]
+        "description": "Goal-oriented agents (one per patient) that call specialist LLM-powered agents to gather data and summarise readiness into a single structured state per case.",
+        "badges": ["Goal-Oriented", "LLM Reasoning", "Multi-Agent"]
     },
     {
         "title": "Specialist Agents",
-        "description": "Data access agents for Pathology (SQLite/MCP), Radiology (CSV), EHR (JSON), providing validated data from mock hospital systems with intelligent filtering.",
-        "badges": ["MCP Tools", "Custom Tools", "Data Validation"]
+        "description": "LLM-powered specialist agents for Pathology (SQLite), Radiology (CSV), EHR (JSON), and Contraindications, using custom tools over mock hospital systems with simple validation.",
+        "badges": ["Custom Tools", "Mock Hospital Data", "Data Validation"]
     },
     {
         "title": "GenomicsIntelligenceAgent",
-        "description": "The key differentiator. LLM-powered genomic analysis using Gemini + real external APIs (cBioPortal, ClinicalTrials.gov, PubMed) to interpret mutations, match clinical trials, and cite evidence.",
+        "description": "The key differentiator (planned). LLM-powered genomic analysis using Gemini + real external APIs (cBioPortal, ClinicalTrials.gov, PubMed) to interpret mutations, match clinical trials, and cite evidence.",
         "badges": ["Gemini 2.0", "3 Real APIs", "RAG", "Clinical Intelligence"]
     }
 ]
@@ -391,10 +392,9 @@ with col1:
     <div class="info-box">
         <h4>Multi-Agent System</h4>
         <ul style="margin: 0; padding-left: 1.5rem; color: #374151; font-size: 0.9rem;">
-            <li>Sequential agents</li>
-            <li>Parallel agents</li>
-            <li>Loop agents</li>
-            <li>LLM-powered reasoning</li>
+            <li>Sequential agents (pipeline per case)</li>
+            <li>Parallel agents (specialist squad per case)</li>
+            <li>LLM-powered reasoning in CaseAgents</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -402,12 +402,11 @@ with col1:
 with col2:
     st.markdown("""
     <div class="info-box">
-        <h4>Tools & APIs</h4>
+        <h4>Tools & Data Sources</h4>
         <ul style="margin: 0; padding-left: 1.5rem; color: #374151; font-size: 0.9rem;">
-            <li>MCP integration</li>
-            <li>Custom tools</li>
-            <li>3 real external APIs</li>
-            <li>OpenAPI tools</li>
+            <li>Custom tools for EHR, Pathology, Radiology, Genomics</li>
+            <li>Mock hospital data in JSON/CSV/SQLite</li>
+            <li>Planned integration with external APIs for genomics</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -415,78 +414,13 @@ with col2:
 with col3:
     st.markdown("""
     <div class="info-box">
-        <h4>Observability</h4>
+        <h4>Observability & Evaluation</h4>
         <ul style="margin: 0; padding-left: 1.5rem; color: #374151; font-size: 0.9rem;">
-            <li>Tracing (@trace)</li>
-            <li>Prometheus metrics</li>
-            <li>Structured logging</li>
-            <li>Evaluation framework</li>
+            <li>Structured Python logging</li>
+            <li>Live execution logs in Streamlit UI</li>
+            <li>Performance comparison script</li>
+            <li>Behavioural evaluation on labelled MDT cases</li>
         </ul>
-    </div>
-    """, unsafe_allow_html=True)
-
-# Development Timeline
-st.markdown('<h2 class="section-header">Development Timeline</h2>', unsafe_allow_html=True)
-
-col1, col2 = st.columns(2)
-
-with col1:
-    st.markdown("""
-    <h4 style="color: #004e89; margin-bottom: 1rem;">Week 1: Core Development</h4>
-    
-    <div class="timeline-item timeline-item-complete">
-        <div class="timeline-date">Nov 15 (Day 1)</div>
-        <div class="timeline-content">Project setup, architecture design, mock data creation</div>
-    </div>
-    
-    <div class="timeline-item timeline-item-current">
-        <div class="timeline-date" style="color: #f57f17;">Nov 16-17 (Days 2-3)</div>
-        <div class="timeline-content">Implement CoordinatorAgent & CaseAgent with ADK</div>
-    </div>
-    
-    <div class="timeline-item timeline-item-future">
-        <div class="timeline-date" style="color: #64748b;">Nov 18-19 (Days 4-5)</div>
-        <div class="timeline-content">Build Specialist Agents (Pathology, Radiology, EHR)</div>
-    </div>
-    
-    <div class="timeline-item timeline-item-future">
-        <div class="timeline-date" style="color: #64748b;">Nov 20-21 (Days 6-7)</div>
-        <div class="timeline-content">Develop GenomicsIntelligenceAgent with real APIs</div>
-    </div>
-    
-    <div class="timeline-item timeline-item-future">
-        <div class="timeline-date" style="color: #64748b;">Nov 22 (Day 8)</div>
-        <div class="timeline-content">Create Streamlit UI pages</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col2:
-    st.markdown("""
-    <h4 style="color: #004e89; margin-bottom: 1rem;">Week 2: Polish & Submit</h4>
-    
-    <div class="timeline-item timeline-item-future">
-        <div class="timeline-date" style="color: #64748b;">Nov 23-24 (Days 9-10)</div>
-        <div class="timeline-content">Add evaluation framework + run tests</div>
-    </div>
-    
-    <div class="timeline-item timeline-item-future">
-        <div class="timeline-date" style="color: #64748b;">Nov 25-26 (Days 11-12)</div>
-        <div class="timeline-content">Write comprehensive documentation</div>
-    </div>
-    
-    <div class="timeline-item timeline-item-future">
-        <div class="timeline-date" style="color: #64748b;">Nov 27 (Day 13)</div>
-        <div class="timeline-content">Deploy to Streamlit Community Cloud</div>
-    </div>
-    
-    <div class="timeline-item timeline-item-future">
-        <div class="timeline-date" style="color: #64748b;">Nov 28-29 (Days 14-15)</div>
-        <div class="timeline-content">Create YouTube video (<3 min)</div>
-    </div>
-    
-    <div class="timeline-item" style="border-left-color: #004e89; background: #e3f2fd;">
-        <div class="timeline-date">Dec 1 (Day 16)</div>
-        <div class="timeline-content">Make repo public + submit to Kaggle</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -517,8 +451,8 @@ with col1:
         <div class="feature-description">
             <ul style="margin: 0; padding-left: 1.5rem; font-size: 0.9rem;">
                 <li><strong>Google ADK</strong> - Agent framework</li>
-                <li><strong>Gemini 2.0 Flash</strong> - LLM reasoning</li>
-                <li><strong>A2A Protocol</strong> - Agent communication</li>
+                <li><strong>Gemini 2.0 Flash</strong> - LLM reasoning in CaseAgents</li>
+                <li><strong>Parallel + Sequential</strong> - Multi-agent orchestration per case</li>
             </ul>
         </div>
     </div>
@@ -530,9 +464,9 @@ with col2:
         <div class="feature-title">External APIs</div>
         <div class="feature-description">
             <ul style="margin: 0; padding-left: 1.5rem; font-size: 0.9rem;">
-                <li><strong>cBioPortal</strong> - Mutation data</li>
-                <li><strong>ClinicalTrials.gov</strong> - Trial matching</li>
-                <li><strong>PubMed</strong> - Literature search</li>
+                <li><strong>cBioPortal</strong> - Mutation data (planned)</li>
+                <li><strong>ClinicalTrials.gov</strong> - Trial matching (planned)</li>
+                <li><strong>PubMed</strong> - Literature search (planned)</li>
             </ul>
         </div>
     </div>
@@ -545,8 +479,8 @@ with col3:
         <div class="feature-description">
             <ul style="margin: 0; padding-left: 1.5rem; font-size: 0.9rem;">
                 <li><strong>Streamlit</strong> - Web UI</li>
-                <li><strong>SQLite/CSV/JSON</strong> - Mock data</li>
-                <li><strong>Prometheus</strong> - Metrics</li>
+                <li><strong>SQLite/CSV/JSON</strong> - Mock data backends</li>
+                <li><strong>Evaluation scripts</strong> - Behaviour & performance analysis</li>
             </ul>
         </div>
     </div>

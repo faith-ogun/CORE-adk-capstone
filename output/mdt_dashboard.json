@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-11-23T15:17:34.120871Z",
+  "generated_at": "2025-11-23T18:07:59.891935Z",
   "mdt_info": {
     "meeting_date": "2025-11-18",
     "meeting_time": "14:00",
@@ -72,7 +72,7 @@
     {
       "patient_id": "789",
       "category": "Radiology",
-      "issue": "BLOCKER: 1 UNSIGNED report(s) found. Latest draft: [PRELIMINARY - NOT FOR CLINICAL USE] Right breast irregular enhancing mass 2 o'clock position measuring 3.9 x 3.6 x 3.4cm with associated non-mass enhancement. Suspicious right axillary lymph node. Left breast unremarkable. PENDING FINAL REVIEW AND ATTENDING SIGNATURE."
+      "issue": "BLOCKER: 1 UNSIGNED report(s) found. Preliminary report indicates right breast mass and suspicious right axillary lymph node."
     }
   ],
   "patient_details": [
@@ -82,13 +82,13 @@
       "case_priority": "Standard",
       "overall_status": "READY",
       "checklist": {
-        "Clinical": "58-year-old with Stage IIA invasive ductal carcinoma of the right breast. Comorbidities include well-controlled Type 2 Diabetes Mellitus, hypertension, and hyperlipidemia.",
-        "Pathology": "Invasive ductal carcinoma, Grade 2. ER Positive (90%), PR Positive (75%), HER2 Negative (IHC 1+).",
+        "Clinical": "58-year-old patient diagnosed with Stage IIA invasive ductal carcinoma of the right breast. The patient has well-controlled Type 2 Diabetes Mellitus, Hypertension, and Hyperlipidemia.",
+        "Pathology": "Invasive ductal carcinoma, Grade 2. ER: Positive (90%), PR: Positive (75%), HER2: Negative (IHC 1+).",
         "Radiology": "Latest Scan (CT): No evidence of distant metastatic disease. Primary tumor right breast measuring 2.6cm with suspicious right axillary lymphadenopathy (largest node 1.2cm, suspicious morphology). Liver, lungs, bones unremarkable.",
         "Genomics": "Key pathogenic mutations: PIK3CA H1047R, TP53 R273H. TMB: TMB-Low.",
-        "Contraindications": "There are 9 drug profiles available for treatment planning."
+        "Contraindications": "9 drug profiles available for treatment planning."
       },
-      "notes": "All reports are present and clear."
+      "notes": "All data is present and clear, setting status to READY."
     },
     {
       "patient_id": "456",
@@ -96,13 +96,13 @@
       "case_priority": "Standard",
       "overall_status": "READY",
       "checklist": {
-        "Clinical": "52-year-old patient diagnosed with Stage IIB invasive lobular carcinoma of the left breast, with a history of hypothyroidism and anxiety disorder.",
-        "Pathology": "Invasive lobular carcinoma, Grade 2. ER Positive (85%), PR Negative, HER2 Positive (IHC 3+).",
-        "Radiology": "Irregular spiculated mass left breast 10 o'clock position measuring approximately 3.0cm. Architectural distortion. BI-RADS 5 - highly suspicious for malignancy.",
-        "Genomics": "ESR1 Y537S mutation detected. TMB is TMB-Low.",
+        "Clinical": "52-year-old female diagnosed with Stage IIB invasive lobular carcinoma of the left breast. She has a history of hypothyroidism and anxiety disorder.",
+        "Pathology": "Invasive lobular carcinoma, Grade 2, ER Positive (85%), PR Negative, HER2 Positive (IHC 3+).",
+        "Radiology": "Latest Scan (Mammogram): Irregular spiculated mass left breast 10 o'clock position measuring approximately 3.0cm. Architectural distortion. BI-RADS 5 - highly suspicious for malignancy. Recommend tissue diagnosis.",
+        "Genomics": "ESR1 Y537S mutation detected. TMB is low.",
         "Contraindications": "Loaded 9 drug profiles. Breast cancer relevant: Doxorubicin, Cyclophosphamide, Paclitaxel, Trastuzumab, Pertuzumab (and 4 more)"
       },
-      "notes": "All reports are present and do not contain blockers. Overall status is READY."
+      "notes": "All reports are present and do not contain any blockers or missing information. Overall status is READY."
     },
     {
       "patient_id": "789",
@@ -110,13 +110,13 @@
       "case_priority": "High - TNBC, young age, renal impairment",
       "overall_status": "BLOCKED",
       "checklist": {
-        "Clinical": "45-year-old female diagnosed with Stage IIA triple-negative invasive ductal carcinoma of the right breast. Comorbidities include chronic kidney disease Stage 3a, vitamin D deficiency, and obesity (BMI 31.2).",
+        "Clinical": "45-year-old female with Stage IIA triple-negative invasive ductal carcinoma of the right breast. Comorbidities include chronic kidney disease Stage 3a, vitamin D deficiency, and obesity (BMI 31.2).",
         "Pathology": "Invasive ductal carcinoma, Grade 3, ER Negative, PR Negative, HER2 Negative (IHC 0).",
-        "Radiology": "BLOCKER: 1 UNSIGNED report(s) found. Latest draft: [PRELIMINARY - NOT FOR CLINICAL USE] Right breast irregular enhancing mass 2 o'clock position measuring 3.9 x 3.6 x 3.4cm with associated non-mass enhancement. Suspicious right axillary lymph node. Left breast unremarkable. PENDING FINAL REVIEW AND ATTENDING SIGNATURE.",
+        "Radiology": "BLOCKER: 1 UNSIGNED report(s) found. Preliminary report indicates right breast mass and suspicious right axillary lymph node.",
         "Genomics": "Genomic testing NOT completed.",
-        "Contraindications": "9 drug profiles are available for treatment planning. Breast cancer relevant: Doxorubicin, Cyclophosphamide, Paclitaxel, Trastuzumab, Pertuzumab"
+        "Contraindications": "9 drug profiles are available for treatment planning, including Doxorubicin, Cyclophosphamide, Paclitaxel, Trastuzumab, Pertuzumab (and 4 more)."
       },
-      "notes": "Radiology report is unsigned and marked preliminary, a BLOCKER."
+      "notes": "Radiology report is unsigned, blocking readiness."
     }
   ]
 }
