@@ -42,6 +42,9 @@ ENV/
 # Jupyter Notebook
 .ipynb_checkpoints
 
+# Folders
+unused/
+
 # pytest
 .pytest_cache/
 .coverage

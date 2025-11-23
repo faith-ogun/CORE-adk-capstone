@@ -1,0 +1,20 @@
+{
+  "meeting_date": "2025-11-18",
+  "patients": [
+    {
+      "patient_id": "123",
+      "expected_status": "READY",
+      "expected_blockers": []
+    },
+    {
+      "patient_id": "456",
+      "expected_status": "READY",
+      "expected_blockers": []
+    },
+    {
+      "patient_id": "789",
+      "expected_status": "BLOCKED",
+      "expected_blockers": ["RADIOLOGY", "GENOMICS"]
+    }
+  ]
+}

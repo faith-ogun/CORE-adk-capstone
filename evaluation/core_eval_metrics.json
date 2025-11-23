@@ -1,0 +1,41 @@
+{
+  "total_cases": 3,
+  "status_matches": 3,
+  "status_accuracy": 1.0,
+  "blocker_hits": 2,
+  "blocker_misses": 0,
+  "blocker_false_positives": 0,
+  "json_error_cases": 0,
+  "total_time_sec": 9.6,
+  "avg_time_per_case_sec": 3.2,
+  "status_mismatches": [],
+  "per_patient": {
+    "123": {
+      "elapsed_sec": 3.287,
+      "expected_status": "READY",
+      "predicted_status": "READY",
+      "expected_blockers": [],
+      "predicted_blockers": []
+    },
+    "456": {
+      "elapsed_sec": 3.178,
+      "expected_status": "READY",
+      "predicted_status": "READY",
+      "expected_blockers": [],
+      "predicted_blockers": []
+    },
+    "789": {
+      "elapsed_sec": 3.132,
+      "expected_status": "BLOCKED",
+      "predicted_status": "BLOCKED",
+      "expected_blockers": [
+        "GENOMICS",
+        "RADIOLOGY"
+      ],
+      "predicted_blockers": [
+        "GENOMICS",
+        "RADIOLOGY"
+      ]
+    }
+  }
+}

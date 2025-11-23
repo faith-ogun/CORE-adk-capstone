@@ -231,17 +231,17 @@ with st.sidebar:
         <div style="margin: 0.75rem 0;">
             <div style="color: #64748b; font-size: 0.85rem;">Progress</div>
             <div style="background: #e2e8f0; border-radius: 10px; height: 8px; margin-top: 0.25rem;">
-                <div style="background: linear-gradient(90deg, #1e88e5 0%, #42b8dd 100%); width: 15%; height: 100%; border-radius: 10px;"></div>
+                <div style="background: linear-gradient(90deg, #1e88e5 0%, #42b8dd 100%); width: 53%; height: 100%; border-radius: 10px;"></div>
             </div>
-            <div style="color: #1e88e5; font-size: 0.75rem; margin-top: 0.25rem; font-weight: 600;">15% Complete</div>
+            <div style="color: #1e88e5; font-size: 0.75rem; margin-top: 0.25rem; font-weight: 600;">53% Complete</div>
         </div>
         <div style="margin: 0.75rem 0;">
             <div style="color: #64748b; font-size: 0.85rem;">Days Remaining</div>
-            <div style="color: #004e89; font-size: 1.5rem; font-weight: 700;">16</div>
+            <div style="color: #004e89; font-size: 1.5rem; font-weight: 700;">8</div>
         </div>
         <div style="margin: 0.75rem 0;">
             <div style="color: #64748b; font-size: 0.85rem;">Submission Deadline</div>
-            <div style="color: #004e89; font-size: 0.9rem; font-weight: 600;">Dec 1, 2025</div>
+            <div style="color: #004e89; font-size: 0.9rem; font-weight: 600;">Dec 2, 2025</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
