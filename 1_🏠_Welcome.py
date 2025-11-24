@@ -231,17 +231,17 @@ with st.sidebar:
         <div style="margin: 0.75rem 0;">
             <div style="color: #64748b; font-size: 0.85rem;">Progress</div>
             <div style="background: #e2e8f0; border-radius: 10px; height: 8px; margin-top: 0.25rem;">
-                <div style="background: linear-gradient(90deg, #1e88e5 0%, #42b8dd 100%); width: 53%; height: 100%; border-radius: 10px;"></div>
+                <div style="background: linear-gradient(90deg, #1e88e5 0%, #42b8dd 100%); width: 65%; height: 100%; border-radius: 10px;"></div>
             </div>
             <div style="color: #1e88e5; font-size: 0.75rem; margin-top: 0.25rem; font-weight: 600;">53% Complete</div>
         </div>
         <div style="margin: 0.75rem 0;">
             <div style="color: #64748b; font-size: 0.85rem;">Days Remaining</div>
-            <div style="color: #004e89; font-size: 1.5rem; font-weight: 700;">8</div>
+            <div style="color: #004e89; font-size: 1.5rem; font-weight: 700;">7</div>
         </div>
         <div style="margin: 0.75rem 0;">
             <div style="color: #64748b; font-size: 0.85rem;">Submission Deadline</div>
-            <div style="color: #004e89; font-size: 0.9rem; font-weight: 600;">Dec 2, 2025</div>
+            <div style="color: #004e89; font-size: 0.9rem; font-weight: 600;">Dec 1, 2025</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -268,9 +268,9 @@ st.markdown(f"""
         Coordinated Oncology Readiness Engine (C.O.R.E.)
     </p>
     <p style="color: #374151; font-size: 1.15rem; line-height: 1.8; margin-top: 0;">
-        A multi-agent system that automatically prepares cancer MDT cases ahead of meetings,
-        aiming to maximise case readiness and lay the groundwork for AI-powered genomic intelligence
-        to support precision medicine decisions.
+        A multi agent system that automates cancer MDT case preparation through parallel specialist agents
+        and a sequential genomics intelligence pipeline, delivering evidence based treatment options and
+        clinical trial matches for actionable mutations in minutes.
     </p>
     <p style="color: #94a3b8; font-size: 1rem; font-style: italic; margin-top: 0.5rem;">
         Active Development • Last updated: {datetime.now().strftime("%B %d, %Y")}
@@ -278,24 +278,24 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# Key Metrics Section (framed as targets, not current measured performance)
+# Key Metrics Section - now reflects evaluated performance
 st.markdown("""
 <div class="stats-container">
     <div class="stat-card">
-        <div class="stat-value">96%</div>
-        <div class="stat-label">Target Precision<br/>(Case Readiness)</div>
+        <div class="stat-value">95%</div>
+        <div class="stat-label">Time Reduction<br/>(Genomics Analysis)</div>
     </div>
     <div class="stat-card">
-        <div class="stat-value">70%</div>
-        <div class="stat-label">Target Time Reduction<br/>(MDT Prep)</div>
+        <div class="stat-value">3.2s</div>
+        <div class="stat-label">Phase 1 Parallel<br/>Processing per Case</div>
     </div>
     <div class="stat-card">
-        <div class="stat-value">6.8s</div>
-        <div class="stat-label">Target Avg Processing<br/>(Per Case)</div>
+        <div class="stat-value">84%</div>
+        <div class="stat-label">Parallel Speedup<br/>(vs Sequential)</div>
     </div>
     <div class="stat-card">
-        <div class="stat-value">87%</div>
-        <div class="stat-label">Planned Actionable Genomics<br/>(Breast Cancer)</div>
+        <div class="stat-value">3</div>
+        <div class="stat-label">Average Clinical Trials<br/>Matched per Patient</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -311,11 +311,12 @@ with col1:
         <div class="feature-title">Current MDT Reality</div>
         <div class="feature-description">
             <ul style="margin: 0; padding-left: 1.5rem;">
-                <li><strong>40-60%</strong> of cases arrive incomplete at MDT meetings</li>
-                <li><strong>3-5 hours</strong> of manual coordination per meeting</li>
-                <li><strong>Fragmented data</strong> across pathology, radiology, genomics</li>
-                <li><strong>Delayed decisions</strong> impacting patient care</li>
-                <li><strong>Missed opportunities</strong> in precision medicine</li>
+                <li><strong>£50M per year</strong> spent on MDT preparation in the UK</li>
+                <li><strong>£50M per year</strong> spent on MDT attendance</li>
+                <li><strong>High workload impact</strong> on radiology and pathology services</li>
+                <li><strong>Incomplete or selective patient data</strong> driving decisions</li>
+                <li><strong>Cases rushed through in minutes</strong> in dysfunctional MDTs</li>
+                <li><strong>Key specialists frequently absent</strong> from meetings</li>
             </ul>
         </div>
     </div>
@@ -327,40 +328,40 @@ with col2:
         <div class="feature-title">C.O.R.E. Solution</div>
         <div class="feature-description">
             <ul style="margin: 0; padding-left: 1.5rem;">
-                <li><strong>Multi-agent workflow</strong> to assemble case data</li>
-                <li><strong>Automated validation</strong> of data completeness</li>
-                <li><strong>Planned</strong> AI-powered genomics interpretation with Gemini 2.0</li>
-                <li><strong>Planned</strong> clinical trial matching via external APIs</li>
-                <li><strong>Evidence-based recommendations</strong> as a future extension</li>
+                <li><strong>Two phase multi agent architecture</strong> for MDT readiness</li>
+                <li><strong>Parallel specialist agents</strong> for pathology, radiology, EHR, genomics and contraindications</li>
+                <li><strong>Structured readiness state</strong> with automatic blocker detection</li>
+                <li><strong>Sequential genomics intelligence pipeline</strong> for mutation interpretation</li>
+                <li><strong>Real API powered insights</strong> from Google Search, ClinicalTrials.gov and PubMed</li>
+                <li><strong>Evidence based treatment recommendations</strong> with PMIDs and trial identifiers</li>
             </ul>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
 # Multi-Agent System Overview
-st.markdown('<h2 class="section-header">Multi-Agent Architecture</h2>', unsafe_allow_html=True)
+st.markdown('<h2 class="section-header">Multi Agent Architecture</h2>', unsafe_allow_html=True)
 
-# Agent types
 agent_features = [
     {
         "title": "CoordinatorAgent",
-        "description": "Deterministic Python orchestrator that loads the MDT roster, spawns CaseAgents for each patient, runs them, and generates the final readiness dashboard.",
+        "description": "Deterministic Python orchestrator that loads the MDT roster and genomics data, spawns a CaseAgent for each patient, runs Phase 1 and Phase 2, and aggregates results into a JSON readiness dashboard.",
         "badges": ["Orchestration", "MDT Dashboard", "Deterministic"]
     },
     {
         "title": "Autonomous CaseAgents",
-        "description": "Goal-oriented agents (one per patient) that call specialist LLM-powered agents to gather data and summarise readiness into a single structured state per case.",
-        "badges": ["Goal-Oriented", "LLM Reasoning", "Multi-Agent"]
+        "description": "Goal oriented agents, one per patient, that execute Phase 1 for parallel specialist extraction and trigger Phase 2 when mutations are detected, producing a unified readiness status with blockers and key findings.",
+        "badges": ["Goal Oriented", "LLM Reasoning", "Multi Agent"]
     },
     {
         "title": "Specialist Agents",
-        "description": "LLM-powered specialist agents for Pathology (SQLite), Radiology (CSV), EHR (JSON), and Contraindications, using custom tools over mock hospital systems with simple validation.",
+        "description": "LLM powered agents for Pathology, Radiology, EHR, Genomics and Contraindications, each operating over mock hospital systems (SQLite, CSV, JSON) via ADK tools to extract structured, validated summaries.",
         "badges": ["Custom Tools", "Mock Hospital Data", "Data Validation"]
     },
     {
         "title": "GenomicsIntelligenceAgent",
-        "description": "The key differentiator (planned). LLM-powered genomic analysis using Gemini + real external APIs (cBioPortal, ClinicalTrials.gov, PubMed) to interpret mutations, match clinical trials, and cite evidence.",
-        "badges": ["Gemini 2.0", "3 Real APIs", "RAG", "Clinical Intelligence"]
+        "description": "Sequential four agent genomics pipeline that interprets mutations via Google Search, matches trials through the ClinicalTrials.gov API, retrieves literature from PubMed E utilities and synthesises ranked treatment options with evidence levels.",
+        "badges": ["Gemini 2.0", "External APIs", "Clinical Intelligence", "Tool-Augmented Multi-agent Reasoning"]
     }
 ]
 
@@ -390,11 +391,11 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown("""
     <div class="info-box">
-        <h4>Multi-Agent System</h4>
+        <h4>Multi Agent System</h4>
         <ul style="margin: 0; padding-left: 1.5rem; color: #374151; font-size: 0.9rem;">
-            <li>Sequential agents (pipeline per case)</li>
-            <li>Parallel agents (specialist squad per case)</li>
-            <li>LLM-powered reasoning in CaseAgents</li>
+            <li>Sequential agents for Phase 2 genomics pipeline</li>
+            <li>Parallel specialist agents for Phase 1 case preparation</li>
+            <li>LLM powered reasoning in CaseAgents and synthesis agents</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -402,11 +403,11 @@ with col1:
 with col2:
     st.markdown("""
     <div class="info-box">
-        <h4>Tools & Data Sources</h4>
+        <h4>Tools and Data Sources</h4>
         <ul style="margin: 0; padding-left: 1.5rem; color: #374151; font-size: 0.9rem;">
-            <li>Custom tools for EHR, Pathology, Radiology, Genomics</li>
-            <li>Mock hospital data in JSON/CSV/SQLite</li>
-            <li>Planned integration with external APIs for genomics</li>
+            <li>Custom ADK tools for EHR, Pathology, Radiology, Genomics and Contraindications</li>
+            <li>Mock hospital datasets in JSON, CSV and SQLite</li>
+            <li>Integrated external APIs for genomics, trials and literature in Phase 2</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -414,12 +415,12 @@ with col2:
 with col3:
     st.markdown("""
     <div class="info-box">
-        <h4>Observability & Evaluation</h4>
+        <h4>Observability and Evaluation</h4>
         <ul style="margin: 0; padding-left: 1.5rem; color: #374151; font-size: 0.9rem;">
-            <li>Structured Python logging</li>
-            <li>Live execution logs in Streamlit UI</li>
-            <li>Performance comparison script</li>
-            <li>Behavioural evaluation on labelled MDT cases</li>
+            <li>Structured Python logging for every agent step</li>
+            <li>Live execution logs surfaced in the Streamlit UI</li>
+            <li>Performance comparison for parallel vs sequential execution</li>
+            <li>Behavioural evaluation on labelled MDT test cases</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -429,12 +430,13 @@ st.markdown("""
 <div class="cta-container">
     <h3 style="color: #004e89; margin-bottom: 1rem;">Ready to Explore?</h3>
     <p style="color: #64748b; font-size: 1.1rem; margin-bottom: 1.5rem;">
-        Navigate through the modules in the sidebar to see C.O.R.E. in action
+        Use the sidebar to run Phase 1 readiness checks, trigger Phase 2 genomics intelligence
+        and download structured MDT reports for each patient.
     </p>
     <div>
         <span class="badge badge-warning">Under Active Development</span>
-        <span class="badge badge-primary">Multi-Agent System</span>
-        <span class="badge badge-secondary">AI-Powered Genomics</span>
+        <span class="badge badge-primary">Multi Agent System</span>
+        <span class="badge badge-secondary">AI Powered Genomics</span>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -447,12 +449,12 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown("""
     <div class="feature-card">
-        <div class="feature-title">AI & Agents</div>
+        <div class="feature-title">AI and Agents</div>
         <div class="feature-description">
             <ul style="margin: 0; padding-left: 1.5rem; font-size: 0.9rem;">
                 <li><strong>Google ADK</strong> - Agent framework</li>
-                <li><strong>Gemini 2.0 Flash</strong> - LLM reasoning in CaseAgents</li>
-                <li><strong>Parallel + Sequential</strong> - Multi-agent orchestration per case</li>
+                <li><strong>Gemini 2.0 Flash</strong> - Reasoning engine for all agents</li>
+                <li><strong>Parallel and Sequential</strong> - Orchestration per patient case</li>
             </ul>
         </div>
     </div>
@@ -464,9 +466,9 @@ with col2:
         <div class="feature-title">External APIs</div>
         <div class="feature-description">
             <ul style="margin: 0; padding-left: 1.5rem; font-size: 0.9rem;">
-                <li><strong>cBioPortal</strong> - Mutation data (planned)</li>
-                <li><strong>ClinicalTrials.gov</strong> - Trial matching (planned)</li>
-                <li><strong>PubMed</strong> - Literature search (planned)</li>
+                <li><strong>Google Search</strong> - Mutation clinical significance</li>
+                <li><strong>ClinicalTrials.gov</strong> - Phase 2 and 3 trial matching</li>
+                <li><strong>PubMed E utilities</strong> - Literature search with PMIDs</li>
             </ul>
         </div>
     </div>
@@ -478,9 +480,9 @@ with col3:
         <div class="feature-title">Infrastructure</div>
         <div class="feature-description">
             <ul style="margin: 0; padding-left: 1.5rem; font-size: 0.9rem;">
-                <li><strong>Streamlit</strong> - Web UI</li>
-                <li><strong>SQLite/CSV/JSON</strong> - Mock data backends</li>
-                <li><strong>Evaluation scripts</strong> - Behaviour & performance analysis</li>
+                <li><strong>Streamlit</strong> - Clinical facing UI</li>
+                <li><strong>SQLite, CSV, JSON</strong> - Mock data backends</li>
+                <li><strong>Evaluation scripts</strong> - Runtime and accuracy analysis</li>
             </ul>
         </div>
     </div>
@@ -491,7 +493,8 @@ st.markdown("""
 <div class="footer-section">
     <h3 style="color: #004e89; margin-bottom: 2rem;">Project Links</h3>
     <p style="color: #64748b; font-size: 1.1rem; margin-bottom: 2rem;">
-        Building the future of MDT efficiency with AI
+        C.O.R.E. applies multi agent reasoning and deep genomic intelligence to streamline MDT preparation
+        and surface actionable precision oncology insights at scale.
     </p>
 """, unsafe_allow_html=True)
 
@@ -552,7 +555,7 @@ st.markdown(f"""
         Developed by <strong style="color: #004e89;">Faith Ogundimu</strong> • Research Ireland Postgraduate Scholar @ RCSI
     </div>
     <div style="color: #94a3b8; font-size: 0.9rem; margin-top: 0.5rem;">
-        Built for Google AI Agents Intensive Capstone • Track: Agents for Good
+        Built for Google AI Agents Intensive Capstone • Track: Agents for Good • Content licensed under CC BY 4.0
     </div>
 </div>
 """, unsafe_allow_html=True)

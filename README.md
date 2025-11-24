@@ -1,11 +1,11 @@
 # 🎯 C.O.R.E. (Coordinated Oncology Readiness Engine)
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=Streamlit&logoColor=white)](https://streamlit.io)
 [![Google ADK](https://img.shields.io/badge/Google-ADK-4285F4?logo=google&logoColor=white)](https://ai.google.dev/adk)
 
-> **An Intelligent Multi-Agent System for Proactive MDT Case Preparation in Precision Oncology**
+> **An intelligent multi agent system for proactive MDT case preparation and deep genomic intelligence**
 
 Built for the [Google AI Agents Intensive - 5 Day Course Capstone](https://www.kaggle.com/competitions/agents-intensive-capstone-project/overview) | **Track:** Agents for Good
 
@@ -14,226 +14,272 @@ Built for the [Google AI Agents Intensive - 5 Day Course Capstone](https://www.k
 ## 📋 Table of Contents
 
 - [Problem Statement](#-problem-statement)
+- [Why Agents](#-why-agents)
 - [Solution Overview](#-solution-overview)
 - [Architecture](#-architecture)
 - [Key Features](#-key-features)
-- [Results & Impact](#-results--impact)
+- [Results & Evaluation](#-results--evaluation)
 - [Installation](#-installation)
 - [Usage](#-usage)
 - [Project Structure](#-project-structure)
-- [Evaluation](#-evaluation)
 - [Technology Stack](#-technology-stack)
-- [Future Enhancements](#-future-enhancements)
-- [Contributing](#-contributing)
 - [License](#-license)
-- [Acknowledgments](#-acknowledgments)
+- [Contact](#-contact)
 
 ---
 
 ## 🎯 Problem Statement
 
-Multidisciplinary Team (MDT) meetings are critical for cancer care, bringing together oncologists, surgeons, radiologists, pathologists, and other specialists to collaboratively decide treatment plans. However:
+Multidisciplinary Team (MDT) meetings are the backbone of cancer care, bringing oncologists, surgeons, radiologists, pathologists and geneticists into the same room to decide treatment plans. In practice they are fragile, inefficient and expensive:
 
-- **40-60% of cases arrive incomplete** at MDT meetings
-- **3-5 hours of manual coordination** required per meeting
-- **Fragmented data** across pathology, radiology, genomics, and clinical systems
-- **Missed precision medicine opportunities** due to late genomic data
+- Estimated **£50M per year for preparation** and another **£50M for attendance** across the UK (Taylor et al. 2010).
+- Workflow analyses show **major workload and bottlenecks** in radiology and pathology services (Kane et al. 2007).
+- Decisions are often made on an **“evidential patient”** assembled from partial records rather than a complete view of the case (Hamilton et al. 2016).
+- Observational studies describe many MDTs as **“rubber stamp” or “tick box” meetings** where cases are rushed, key specialists are absent and discussion is dominated by a few voices (Fricker 2020).
 
-### The Impact:
-- Wasted specialist time reviewing incomplete cases
-- Delayed treatment decisions for patients
-- Complex genomic results often arrive too late to inform MDT discussions
+On top of this, modern precision oncology adds another bottleneck:
+
+- Genomic reports are complex and time consuming to interpret.
+- Clinicians manually search OncoKB, ClinVar, ClinicalTrials.gov and PubMed for each actionable mutation.
+- **Manual genomic interpretation can easily take 60+ minutes per patient**, which does not scale when an MDT has tens of cases.
+
+The result is a workflow that consumes significant clinical resources while still delivering variable, sometimes incomplete decisions.
+
+---
+
+## 🤖 Why Agents
+
+MDT preparation is naturally multi agent:
+
+- Each domain (EHR, pathology, radiology, genomics, contraindications) has its **own data, tools and failure modes**.
+- In real MDTs, **specialists work in parallel**, not sequentially.
+- Genomic interpretation, in contrast, requires **sequential reasoning**: clinical significance → trial matching → evidence retrieval → synthesis.
+
+A single monolithic LLM prompt does not reflect that reality.
+
+C.O.R.E. deliberately mirrors MDT behaviour:
+- **Parallel domain agents** behave like virtual specialists for EHR, pathology, radiology, genomics and drug safety.
+- A **hierarchical synthesis agent** acts as a case manager that integrates specialist inputs into a structured readiness state.
+- A **sequential four agent genomics pipeline** performs stepwise mutation interpretation, trial matching and evidence synthesis.
+- A **deterministic Coordinator** orchestrates multiple patients and produces a dashboard, keeping the top level logic transparent and testable.
+
+This gives:
+- Faster execution through parallelism.
+- Modularity, as each specialist can evolve independently.
+- Traceability, since each specialist report is visible.
+- Depth, via a dedicated genomics pipeline that surfaces treatment options and trials.
 
 ---
 
 ## 💡 Solution Overview
 
-**C.O.R.E.** is a multi-agent system that autonomously prepares cancer MDT cases **48 hours before meetings**, ensuring 100% case readiness while providing AI-powered genomic intelligence.
+**C.O.R.E.** is a two phase multi agent system that:
 
-### How It Works:
+1. **Autonomously prepares MDT cases 48 hours before the meeting**, checking completeness and surfacing blockers.
+2. **Runs deep genomic intelligence** for patients with mutation data, producing treatment recommendations and clinical trial matches.
 
-1. **CoordinatorAgent** reads the MDT patient roster
-2. **Spawns autonomous CaseAgents** (one per patient)
-3. **CaseAgents request data** from specialist agents via A2A Protocol
-4. **Specialist Agents** query hospital systems (pathology, radiology, EHR, genomics)
-5. **GenomicsIntelligenceAgent** ⭐ analyzes mutation profiles with Gemini + real APIs
-6. **Dashboard** shows real-time case readiness with blockers flagged
+### Phase 1: Case Preparation (Parallel Specialists)
 
-### The Differentiator: GenomicsIntelligenceAgent ⭐
+For each patient on the MDT roster:
 
-Unlike simple data aggregation, C.O.R.E. features an **LLM-powered Genomics Intelligence Agent** that:
-- Interprets mutation clinical significance using Gemini 2.0
-- Calls **real external APIs**: cBioPortal, ClinicalTrials.gov, PubMed
-- Matches patients to precision therapies and clinical trials
-- Generates evidence-based recommendations with citations
+1. **CoordinatorAgent** loads the roster and spawns one **CaseAgent** per patient. :contentReference[oaicite:4]{index=4}  
+2. Each CaseAgent runs a **ParallelAgent** of five specialists: :contentReference[oaicite:5]{index=5}  
+   - `PathologyAgent` over a SQLite database  
+   - `RadiologyAgent` over a CSV report log  
+   - `EHRAgent` over JSON clinical notes  
+   - `GenomicsAgent` over a genomics registry  
+   - `ContraindicationAgent` over drug safety rules  
+3. A **CaseManager** LlmAgent synthesises these into a JSON readiness object with:
+   - Structured checklist
+   - Detected blockers
+   - Overall status: `READY`, `IN_PROGRESS` or `BLOCKED`
+
+### Phase 2: Genomics Intelligence (Sequential Pipeline)
+
+For patients with mutation data:
+
+1. **`MutationInterpreter`**  
+   - Uses Google Search via Gemini tools to determine clinical significance, mechanism, actionability and prevalence per mutation.
+2. **`ClinicalTrialMatcher`**  
+   - Queries the ClinicalTrials.gov API by gene, variant and cancer type for recruiting Phase 2/3 trials.
+3. **`EvidenceSearcher`**  
+   - Calls PubMed E utilities to retrieve key clinical trials and evidence with PMIDs.
+4. **`GenomicsSynthesizer`**  
+   - Combines everything into a structured report:
+     - Mutation list with actionability
+     - Ranked treatment recommendations with evidence levels
+     - Matched clinical trials
+     - Suggested next steps for the MDT
+
+This pipeline is implemented as a `SequentialAgent` composed of four LlmAgents.  
 
 ---
 
 ## 🏗️ Architecture
 
-![C.O.R.E. Architecture](./docs/architecture-diagram.png)
+### High level layers
 
-### System Components:
+1. **Orchestration Layer**
 
-#### **1. Orchestration Layer**
-- **CoordinatorAgent** (Gemini 2.0 Flash)
-  - Reads MDT roster
-  - Spawns CaseAgents
-  - Monitors progress
-  - Session management with `InMemorySessionService`
+   - `CoordinatorAgent` (pure Python, no LLM)
+   - Loads MDT roster and genomics data.
+   - Spawns `CaseAgent` instances (one per patient).
+   - Runs Phase 1 and Phase 2.
+   - Generates an MDT dashboard plus genomics intelligence outputs. 
 
-#### **2. Autonomous Case Agents**
-- **CaseAgent_PatientXXX** (Gemini 2.0 Flash)
-  - Goal: Fill "Case-Ready Checklist"
-  - Autonomous reasoning (decides what data to request)
-  - Handles conflicts (e.g., multiple pathology reports)
-  - Validates completeness (e.g., rejects unsigned reports)
-  - Escalates blockers to human coordinators
+2. **Phase 1: CaseAgent (Hierarchical Multi Agent)**
 
-#### **3. Specialist Agents (Data Access)**
-- **PathologyAgent** (MCP Tool + SQLite)
-- **RadiologyAgent** (Custom Tool + CSV)
-- **EHRAgent** (JSON API)
-- **GenomicsIntelligenceAgent** ⭐ (Gemini + External APIs)
+   - **Parallel specialist squad** implemented with `ParallelAgent`: :contentReference[oaicite:11]{index=11}  
+     - `EHRAgent`
+     - `PathologyAgent`
+     - `RadiologyAgent`
+     - `GenomicsAgent`
+     - `ContraindicationAgent`
+   - **CaseManager** LlmAgent aggregates results into a final JSON readiness object.
 
-#### **4. A2A Communication Layer**
-- Message Bus for agent-to-agent communication
-- Standardized A2A Protocol
-- Request-response correlation
-- Full message logging for auditability
+3. **Phase 2: GenomicsIntelligenceAgent (Sequential Pipeline)**
 
-#### **5. Observability & Evaluation**
-- Tracing with `@trace()` decorator
-- Prometheus metrics (response times, API calls)
-- Structured logging (JSON format)
-- Evaluation framework (precision, recall, F1)
+   - `MutationInterpreter` → `ClinicalTrialMatcher` → `EvidenceSearcher` → `GenomicsSynthesizer`, each an LlmAgent, wrapped in a `SequentialAgent`. :contentReference[oaicite:12]{index=12}  
 
-### Agent Interaction Flow:
+4. **Streamlit UI**
 
-```
-┌────────────────────────────────────────────────────────────────┐
-│                     CoordinatorAgent                            │
-│                 (Gemini 2.0 - Manager)                          │
-└──────────────────────┬─────────────────────────────────────────┘
-                       │
-         ┌─────────────┴──────────────┐
-         │                            │
-    ┌────▼─────┐              ┌───────▼──────┐
-    │CaseAgent │              │ CaseAgent    │
-    │Patient123│              │ Patient456   │
-    │(Gemini)  │              │ (Gemini)     │
-    └────┬─────┘              └───────┬──────┘
-         │                            │
-         └──────────┬─────────────────┘
-                    │
-         ┌──────────▼───────────┐
-         │   A2A Message Bus    │
-         └──────────┬───────────┘
-                    │
-    ┌───────────────┼───────────────────────────┐
-    │               │                           │
-┌───▼────┐  ┌──────▼─────┐  ┌─────────▼────────────────────┐
-│Pathology│  │ Radiology  │  │GenomicsIntelligenceAgent ⭐  │
-│ Agent   │  │   Agent    │  │(Gemini + APIs)               │
-└───┬─────┘  └──────┬─────┘  └─────────┬────────────────────┘
-    │               │                   │
-    │               │          ┌────────┼────────┐
-    │               │          │        │        │
-┌───▼────┐  ┌──────▼─────┐  ┌─▼──┐  ┌─▼───┐  ┌─▼────┐
-│Pathology│  │ Radiology  │  │cBio│  │Trials│  │PubMed│
-│Database │  │   PACS     │  │    │  │ .gov │  │      │
-└─────────┘  └────────────┘  └────┘  └──────┘  └──────┘
-```
+   - `1_🏠_Welcome.py` – narrative overview, architecture and metrics. :contentReference[oaicite:13]{index=13}  
+   - `2_📈_Live_Execution.py` – runs Phase 1, shows logs and dashboard. :contentReference[oaicite:14]{index=14}  
+   - `3_🧬_Genomics_Insights.py` – runs both phases for a selected patient and visualises mutations, treatments and trials. :contentReference[oaicite:15]{index=15}  
 
-[**View Interactive Architecture Diagram**](./docs/core-architecture-diagram.html)
+### Agent interaction diagram
+
+```text
+User / MDT Roster
+          │
+          ▼
+┌──────────────────────────────┐
+│        CoordinatorAgent      │  (deterministic)
+└───────────┬──────────────────┘
+            │
+   ┌────────┴─────────┐
+   │                  │
+   ▼                  ▼
+PHASE 1           PHASE 2
+Case Preparation  Genomics Intelligence (conditional)
+
+Patient-specific CaseAgent
+┌─────────────────────────────────────────────────────────────┐
+│ SequentialAgent: CasePipeline_patientX                      │
+│   1) ParallelAgent SpecialistSquad                          │
+│      • EHRAgent • PathologyAgent • RadiologyAgent           │
+│      • GenomicsAgent • ContraindicationAgent                │
+│   2) CaseManager (synthesis)                                │
+└─────────────────────────────────────────────────────────────┘
+
+GenomicsIntelligenceAgent (for patients with mutations)
+┌─────────────────────────────────────────────────────────────┐
+│ SequentialAgent: GenomicsIntelligencePipeline_patientX      │
+│   1) MutationInterpreter (Google Search)                    │
+│   2) ClinicalTrialMatcher (ClinicalTrials.gov)              │
+│   3) EvidenceSearcher (PubMed)                              │
+│   4) GenomicsSynthesizer (final report)                     │
+└─────────────────────────────────────────────────────────────┘
+````
+
+![Architecture Diagram](docs/architecture-diagram.png)
 
 ---
 
 ## ✨ Key Features
+### Multi agent design
 
-### **Multi-Agent System Capabilities:**
+* **Two phase workflow**
+  * Phase 1: automated case readiness checks.
+  * Phase 2: deep genomic intelligence triggered only when mutations are present.
 
-✅ **Sequential Agents**: CoordinatorAgent → CaseAgents → Specialist Agents  
-✅ **Parallel Agents**: Multiple CaseAgents process patients simultaneously  
-✅ **Loop Agents**: CaseAgents iterate until checklist complete or blocked  
-✅ **LLM-Powered**: All agents use Gemini 2.0 Flash for reasoning  
+* **Hierarchical multi agent architecture**
+  * Parallel domain specialists plus supervisor style synthesis in CaseAgent. 
+  * Sequential specialist pipeline for genomics.
 
-### **Tool Integration:**
+* **Deterministic top level orchestration**
+  * Coordinator is regular Python code with explicit control flow and logging, which keeps behaviour inspectable and testable. 
 
-✅ **MCP (Model Context Protocol)**: PathologyAgent database queries  
-✅ **Custom Tools**: `spawn_case_agent()`, `query_pathology()`, `validate_radiology()`  
-✅ **OpenAPI Tools**: 3 real external APIs (cBioPortal, ClinicalTrials.gov, PubMed)  
+### Tool augmented reasoning
 
-### **Sessions & Memory:**
+* Custom ADK `FunctionTool`s for:
 
-✅ **Session Management**: `InMemorySessionService` for state persistence  
-✅ **Memory Bank**: CaseAgents store specialist responses for context  
-✅ **Context Engineering**: Long reports compacted to stay within context limits  
+  * EHR JSON, pathology SQLite, radiology CSV, genomics JSON and contraindication rules. 
+* External APIs:
 
-### **A2A Protocol:**
+  * Google Search via Gemini tools for mutation interpretation. 
+  * ClinicalTrials.gov API for trial discovery. 
+  * PubMed E utilities for evidence retrieval with PMIDs. 
 
-✅ **Standardized Messaging**: A2AMessage schema with correlation IDs  
-✅ **Message Bus**: Centralized communication hub  
-✅ **Full Auditability**: All messages logged  
+### Genomics intelligence output
 
-### **Observability:**
+* Clinical significance and actionability per mutation.
+* Identification of FDA approved targeted therapies where available.
+* Ranked treatment recommendations with evidence levels and key trials.
+* Top clinical trial matches with phase and eligibility summaries.
+* Concrete next step suggestions for MDT discussion. 
 
-✅ **Tracing**: `@trace()` decorator on all workflows  
-✅ **Metrics**: Prometheus counters/histograms (response times, API calls)  
-✅ **Structured Logging**: JSON format for production monitoring  
+### Observability and clinician facing UI
 
-### **Evaluation:**
+* Live, coloured logs surfaced in the **Live Execution** page for every step of the Coordinator and CaseAgents. 
+* Streamlit dashboards for:
 
-✅ **Test Cases**: Ground truth validation  
-✅ **Metrics**: Precision (96%), Recall (94%), F1 score  
-✅ **Citation Validation**: PubMed API verification (100% accuracy)  
+  * MDT readiness status, blockers and checklists.
+  * Genomics overview, mutation cards, treatment cards and clinical trial cards, plus JSON and text report downloads. 
 
 ---
 
-## 📊 Results & Impact
+## 📊 Results & Evaluation
 
-### **Case Readiness Accuracy:**
-- **Precision:** 96% (cases marked ready that were actually complete)
-- **Recall:** 94% (complete cases correctly identified)
-- **False Positive Rate:** 4% (below 5% target ✅)
+### Phase 1 – Case preparation behaviour
 
-### **Time Savings:**
-- **Baseline:** 5 hours manual prep per MDT
-- **With C.O.R.E.:** 1.5 hours (70% reduction)
-- **Annual Cost Savings:** €4,960 (based on coordinator hourly rate)
+Behavioural evaluation is implemented in `evaluation/core_evaluation.py` using a labelled test set in `evaluation/mdt_eval_labels.json`.
 
-### **Genomics Intelligence Performance:**
-- **Actionable Mutations Detected:** 87% of breast cancer cases
-- **Clinical Trial Match Relevance:** 92% (validated by oncologist)
-- **Citation Accuracy:** 100% (all PubMed citations valid)
-- **Average Processing Time:** 4.2 seconds per genomics analysis
+Key metrics from `core_eval_metrics.json`:
 
-### **System Performance:**
-- **Average Case Processing:** 6.8 seconds
-- **Peak Concurrent Cases:** 15 (all processed in <10s)
-- **API Efficiency:** 89% cache hit rate
-- **Zero Errors:** In 50 test cases
+* **Total labelled cases:** 3
+* **Status accuracy:** 100 percent (all READY/BLOCKED statuses correct)
+* **Blocker detection:**
+
+  * Hits: 2
+  * Misses: 0
+  * False positives: 0
+* **Average latency per case (Phase 1):** **3.2 seconds**
+* **Total evaluation time:** 9.6 seconds for 3 patients
+
+The Welcome page summarises this as an **approximately 84 percent speedup** compared with a sequential baseline. 
+
+### Phase 2 – Genomics intelligence performance
+
+On synthetic but realistic breast cancer genomics profiles, the system:
+
+* Reduces manual mutation interpretation from **60+ minutes to around 2–3 minutes per patient**, including external API calls.
+* Surfaces actionable mutations, FDA approved targeted therapies and relevant trials using Google Search, ClinicalTrials.gov and PubMed.
+* Produces structured reports with PMIDs and NCT IDs that can be exported as JSON or text for MDT packs.
+
+These genomics metrics are scenario based rather than formally benchmarked, but the pipeline is fully implemented and observable end to end.
 
 ---
 
 ## 🚀 Installation
 
-### **Prerequisites:**
-- Python 3.10 or higher
-- Google AI API key (for Gemini)
-- Git
+### Prerequisites
 
-### **Step 1: Clone Repository**
+* Python 3.10 or higher
+* Git
+* Google AI API key (for Gemini)
+
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/CORE-adk-capstone.git
+git clone https://github.com/faith-ogun/CORE-adk-capstone.git
 cd CORE-adk-capstone
 ```
 
-### **Step 2: Create Virtual Environment**
+### 2. Create a virtual environment
 
 ```bash
-# macOS/Linux
+# macOS / Linux
 python3 -m venv venv
 source venv/bin/activate
 
@@ -242,271 +288,190 @@ python -m venv venv
 venv\Scripts\activate
 ```
 
-### **Step 3: Install Dependencies**
+### 3. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### **Step 4: Set Up Environment Variables**
+### 4. Configure environment variables
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the project root:
 
 ```env
 # Google AI API Key
 GOOGLE_API_KEY=your_gemini_api_key_here
 
-# Optional: Entrez email for PubMed API
+# Optional: Email for PubMed E-utilities
 ENTREZ_EMAIL=your_email@example.com
 ```
 
-**Get your Google AI API key:**
-1. Go to [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Create a new API key
-3. Copy and paste into `.env` file
+Get an API key from **Google AI Studio** and paste it into `.env`.
 
-### **Step 5: Initialize Mock Database**
+### 5. Initialise mock data
 
 ```bash
-python scripts/setup_mock_data.py
+python3 scripts/setup_mock_data.py
 ```
 
-This creates:
-- `mock_db/pathology_db.sqlite` (pathology reports)
-- `mock_db/radiology_scans.csv` (imaging data)
-- `mock_db/clinical_notes.json` (EHR data)
-- `mock_db/genomics_data.json` (mutation profiles)
-- `mock_db/mdt_roster_2025-11-18.json` (patient list)
+This populates the `mock_db` folder with:
+
+* `pathology_db.sqlite` – pathology database
+* `radiology_scans.csv` – imaging reports
+* `clinical_notes.json` – EHR snapshots
+* `genomics_data.json` – mutation profiles
+* `mdt_roster_2025-11-18.json` – MDT roster
 
 ---
 
 ## 💻 Usage
 
-### **Run Streamlit App:**
+### Option 1 – Streamlit UI (recommended)
+
+From the repository root:
 
 ```bash
 streamlit run 1_🏠_Welcome.py
 ```
 
-The app will open in your browser at `http://localhost:8501`
+Open `http://localhost:8501` in your browser.
 
-### **Navigate the App:**
+Pages:
 
-1. **Welcome Page**: Select your role (MDT Coordinator, Radiologist, Administrator)
-2. **Readiness Dashboard**: 
-   - Click "Run Pre-MDT Readiness Check"
-   - View case status (✅ Ready / ⚠️ Blocked)
-   - See live agent activity log
-3. **Genomics Insights**: Deep-dive into mutation analysis & trial matching
-4. **Analytics Dashboard**: View performance metrics & bottleneck analysis
+1. **Welcome**
 
-### **Command-Line Usage (for testing):**
+   * Project background, architecture and headline metrics. 
+
+2. **Live Execution**
+
+   * Runs Phase 1 only.
+   * Shows live logs, per patient readiness, blockers and a downloadable MDT dashboard. 
+
+3. **Genomics Insights**
+
+   * Runs both Phase 1 and Phase 2.
+   * Enter a patient ID (for example `123`) and trigger genomic analysis.
+   * View mutation cards, treatment options and clinical trial matches.
+   * Download JSON and text versions of the genomics report. 
+
+### Option 2 – Command line coordinator
+
+To run the full pipeline headless:
 
 ```bash
-# Run single case evaluation
-python -m agents.coordinator --patient-id 123
-
-# Run full MDT preparation
-python -m agents.coordinator --mdt-date 2025-11-18
-
-# Run evaluation suite
-python -m evaluation.evaluator --test-cases evaluation/test_cases.json
+cd CORE-adk-capstone
+python3 agents.coordinator
 ```
+
+This will:
+
+* Load the MDT roster.
+* Run Phase 1 for all patients.
+* Run Phase 2 for patients with mutation data.
+* Write:
+
+```text
+output/mdt_dashboard.json          # MDT readiness dashboard
+output/genomics_intelligence.json  # Genomics reports per patient
+```
+
+### Option 3 – Behavioural evaluation
+
+To reproduce the Phase 1 evaluation:
+
+```bash
+python3 evaluation.core_evaluation
+```
+
+Metrics are written to `evaluation/core_eval_metrics.json`.
 
 ---
 
 ## 📁 Project Structure
 
-```
+```text
 CORE-adk-capstone/
-├── 1_🏠_Welcome.py                 # Main Streamlit entry point
+├── 1_🏠_Welcome.py                # Streamlit landing page (narrative + metrics)
+├── 2_📈_Live_Execution.py         # Phase 1 live execution UI :contentReference[oaicite:34]{index=34}
+├── 3_🧬_Genomics_Insights.py      # Phase 2 genomics UI :contentReference[oaicite:35]{index=35}
 ├── agents/
-│   ├── __init__.py
-│   ├── coordinator.py              # CoordinatorAgent (Gemini)
-│   ├── case_agent.py               # CaseAgent (Gemini, goal-oriented)
-│   ├── pathology_agent.py          # PathologyAgent (MCP)
-│   ├── radiology_agent.py          # RadiologyAgent (Custom Tool)
-│   ├── ehr_agent.py                # EHRAgent (JSON API)
-│   └── genomics_agent.py           # GenomicsIntelligenceAgent ⭐
+│   ├── coordinator.py             # Deterministic CoordinatorAgent :contentReference[oaicite:36]{index=36}
+│   ├── case_agent.py              # CaseAgent with Parallel + Sequential pipeline :contentReference[oaicite:37]{index=37}
+│   └── genomics_intelligence.py   # GenomicsIntelligenceAgent sequential pipeline :contentReference[oaicite:38]{index=38}
 ├── tools/
-│   ├── __init__.py
-│   ├── a2a_protocol.py             # A2A Message Bus
-│   ├── database_tools.py           # Database query tools
-│   └── api_integrations.py         # cBioPortal, ClinicalTrials.gov, PubMed
+│   ├── clinical_trials_api.py     # ClinicalTrials.gov integration
+│   └── pubmed_api.py              # PubMed E utilities integration
 ├── mock_db/
-│   ├── pathology_db.sqlite         # SQLite pathology database
-│   ├── radiology_scans.csv         # Radiology imaging CSV
-│   ├── clinical_notes.json         # EHR clinical notes
-│   ├── genomics_data.json          # Genomic mutation profiles
-│   └── mdt_roster_2025-11-18.json  # Patient roster
+│   ├── pathology_db.sqlite        # Pathology database
+│   ├── radiology_scans.csv        # Radiology reports
+│   ├── clinical_notes.json        # EHR data
+│   ├── genomics_data.json         # Genomic mutation profiles
+│   └── mdt_roster_2025-11-18.json # MDT roster
 ├── evaluation/
-│   ├── test_cases.json             # Ground truth test cases
-│   ├── evaluator.py                # Evaluation framework
-│   └── metrics.py                  # Precision/Recall calculator
-├── pages/
-│   ├── 2_📊_Readiness_Dashboard.py # Main dashboard
-│   ├── 3_📈_Analytics.py           # Performance analytics
-│   └── 4_🧬_Genomics_Insights.py   # Genomics deep-dive
-├── utils/
-│   ├── logging_config.py           # Structured logging setup
-│   ├── tracing.py                  # @trace decorator
-│   └── metrics.py                  # Prometheus metrics
+│   ├── core_evaluation.py         # Behavioural evaluation script :contentReference[oaicite:39]{index=39}
+│   ├── mdt_eval_labels.json       # Ground truth labels :contentReference[oaicite:40]{index=40}
+│   └── core_eval_metrics.json     # Evaluation outputs :contentReference[oaicite:41]{index=41}
+├── output/                        # Generated dashboards and reports
 ├── scripts/
-│   └── setup_mock_data.py          # Initialize mock databases
-├── docs/
-│   ├── architecture-diagram.png    # Architecture diagram
-│   ├── core-architecture-diagram.html  # Interactive diagram
-│   └── EVALUATION.md               # Detailed evaluation report
-├── requirements.txt                # Python dependencies
-├── .env.example                    # Environment variables template
-├── .gitignore                      # Git ignore rules
-├── LICENSE                         # MIT License
-└── README.md                       # This file
+│   └── setup_mock_data.py         # Helper to create mock_db
+├── assets/                        # Logos and hero image for Streamlit UI :contentReference[oaicite:42]{index=42}
+├── requirements.txt               # Python dependencies
+├── .env.example                   # Environment variable template
+└── README.md                      # This file
 ```
-
----
-
-## 🧪 Evaluation
-
-### **Test Coverage:**
-
-I created 50 test cases with ground truth labels:
-- **Complete cases** (expected: READY)
-- **Blocked cases** (e.g., unsigned radiology reports)
-- **Cases with actionable genomics**
-
-### **Evaluation Metrics:**
-
-```python
-# Run evaluation
-python -m evaluation.evaluator
-
-# Results:
-# ✅ Precision: 96% (48/50 cases marked READY were actually complete)
-# ✅ Recall: 94% (47/50 complete cases correctly identified)
-# ✅ F1 Score: 0.95
-# ✅ False Positive Rate: 4% (below 5% target)
-```
-
-### **Genomics Intelligence Validation:**
-
-- **Clinical Trial Match Relevance:** 92% (validated by oncologist)
-- **Citation Accuracy:** 100% (all PubMed citations verified)
-- **Actionable Mutation Detection:** 87% of breast cancer cases
-
-[**View Full Evaluation Report**](./docs/EVALUATION.md)
 
 ---
 
 ## 🛠️ Technology Stack
 
-### **Core Frameworks:**
-- **[Google ADK](https://ai.google.dev/adk)**: Agent Development Kit
-- **[Gemini 2.0 Flash](https://ai.google.dev/)**: LLM for agent reasoning
-- **[Streamlit](https://streamlit.io/)**: Web UI framework
+### Core frameworks
 
-### **Agent Communication:**
-- **A2A Protocol**: Custom agent-to-agent messaging
-- **InMemorySessionService**: Session state management
-- **Memory Bank**: Context storage
+* **Google Agent Development Kit (ADK)**
 
-### **External APIs:**
-- **[cBioPortal API](https://www.cbioportal.org/api)**: Population mutation data
-- **[ClinicalTrials.gov API](https://clinicaltrials.gov/api/v2)**: Trial matching
-- **[PubMed API](https://www.ncbi.nlm.nih.gov/books/NBK25501/)**: Literature search (via Biopython)
+  * `LlmAgent`, `ParallelAgent`, `SequentialAgent` for agent composition.
+* **Gemini 2.0 Flash**
 
-### **Data Storage:**
-- **SQLite**: Pathology reports
-- **CSV**: Radiology scans
-- **JSON**: Clinical notes, genomics data
+  * LLM used for all reasoning and tool orchestration.
+* **Streamlit**
 
-### **Observability:**
-- **Prometheus**: Metrics collection
-- **structlog**: Structured logging
-- **@trace decorator**: Request tracing
+  * Lightweight clinical UI for execution and visualisation.
 
-### **Development:**
-- **Python 3.10+**
-- **pytest**: Testing framework
-- **black**: Code formatting
-- **flake8**: Linting
+### External data sources
 
----
+* **Google Search via Gemini tools** – mutation interpretation and clinical significance. 
+* **ClinicalTrials.gov API** – trial matching for actionable mutations. 
+* **PubMed E utilities** – literature search and PMIDs. 
 
-## 🚧 Future Enhancements
+### Data storage
 
-### **Phase 1: Real EHR Integration**
-- [ ] Connect to FHIR APIs (HL7 FHIR standard)
-- [ ] OAuth authentication for hospital systems
-- [ ] Real-time data sync
-
-### **Phase 2: Automated Blocker Resolution**
-- [ ] Auto-send reminders to radiologists for unsigned reports
-- [ ] Integration with hospital email/Slack
-- [ ] Escalation workflows
-
-### **Phase 3: Multi-Cancer Type Support**
-- [ ] Extend beyond breast cancer (lung, colorectal, etc.)
-- [ ] Cancer-type-specific genomics interpretation
-- [ ] Custom treatment guidelines per cancer type
-
-### **Phase 4: Continuous Learning**
-- [ ] Collect MDT coordinator feedback
-- [ ] Fine-tune agent prompts based on accuracy
-- [ ] A/B testing for agent improvements
-
-### **Phase 5: Advanced Analytics**
-- [ ] ML model to predict blockers before they occur
-- [ ] Identify systemic bottlenecks (e.g., slow radiologists)
-- [ ] ROI calculator for hospital adoption
-
-### **Phase 6: Mobile App**
-- [ ] Push notifications for specialists
-- [ ] Quick-approve interface for report signing
-- [ ] Real-time case status updates
-
----
-
-## 🤝 Contributing
-
-This project was built for the Google AI Agents Intensive Capstone. While contributions are welcome post-submission, please note:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+* **SQLite** – pathology database.
+* **CSV** – radiology reports.
+* **JSON** – clinical notes, genomics data, MDT roster and evaluation labels.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- **Google AI**: For the Agents Intensive course and ADK framework
-- **Kaggle**: For hosting the capstone competition
+All code and documentation in this repository are released under the **Attribution 4.0 International (CC BY 4.0)** licence.
 
 ---
 
 ## 📧 Contact
+**Faith Ogundimu**
+Research Ireland Postgraduate Scholar, Royal College of Surgeons in Ireland (RCSI)
 
-**Faith Ogundimu** - Research Ireland Postgraduate Scholar @ Royal College of Surgeons Ireland  
-[GitHub](https://github.com/faith-ogun) | [LinkedIn](https://www.linkedin.com/in/faith-ogundimu)
+* GitHub: [https://github.com/faith-ogun](https://github.com/faith-ogun)
+* LinkedIn: [https://www.linkedin.com/in/faith-ogundimu](https://www.linkedin.com/in/faith-ogundimu)
+* Email: [faithogundimu25@rcsi.com](mailto:faithogundimu25@rcsi.com)
 
-**Project Link**: [https://github.com/faith-ogun/CORE-adk-capstone](https://github.com/faith-ogun/CORE-adk-capstone)
-
-**Live Demo**: [https://your-core-app.streamlit.app](https://your-core-app.streamlit.app) (Coming soon)
+**Project repository:** [https://github.com/faith-ogun/CORE-adk-capstone](https://github.com/faith-ogun/CORE-adk-capstone)
 
 ---
 
 <div align="center">
 
-**Built with ❤️ for improving cancer care**
+**Built with ❤️ to reduce MDT friction and bring precision oncology into everyday clinical practice.**
 
-🏥 **Agents for Good** | 🤖 **Powered by Google ADK & Gemini** | 🎯 **Precision Oncology**
+🏥 Agents for Good | 🤖 Google ADK & Gemini | 🧬 Genomic intelligence at scale
 
 </div>
