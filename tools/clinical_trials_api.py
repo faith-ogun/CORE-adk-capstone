@@ -21,8 +21,8 @@ def search_clinical_trials(
     mutation: str = "",
     cancer_type: str = "breast cancer",
     max_results: int = 10,
-    phase: List[str] = None,    
-    status: List[str] = None   
+    phase: Optional[List[str]] = None,    # Use Optional instead of |
+    status: Optional[List[str]] = None
 ) -> str:
     """
     Search ClinicalTrials.gov for trials matching genetic criteria.
