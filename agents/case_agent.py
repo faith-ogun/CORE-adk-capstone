@@ -218,7 +218,7 @@ class CaseAgent:
         2. **Pathology**: {{pathology_result}}
         3. **Radiology**: {{radiology_result}}
         4. **Genomics**: {{genomics_result}}
-        5. **Contraindications**: {{contraindication_result}}  ← NEW!
+        5. **Contraindications**: {{contraindication_result}} 
         
         Your Task:
         Analyze these 5 inputs and produce a FINAL JSON readiness object.
@@ -237,7 +237,7 @@ class CaseAgent:
                 "Pathology": "Summary...",
                 "Radiology": "Summary...",
                 "Genomics": "Summary...",
-                "Contraindications": "Summary..."  ← NEW!
+                "Contraindications": "Summary..."
             }},
             "notes": "Brief explanation of status"
         }}
