@@ -82,8 +82,8 @@ This gives:
 
 For each patient on the MDT roster:
 
-1. **CoordinatorAgent** loads the roster and spawns one **CaseAgent** per patient. :contentReference[oaicite:4]{index=4}  
-2. Each CaseAgent runs a **ParallelAgent** of five specialists: :contentReference[oaicite:5]{index=5}  
+1. **CoordinatorAgent** loads the roster and spawns one **CaseAgent** per patient.   
+2. Each CaseAgent runs a **ParallelAgent** of five specialists:  
    - `PathologyAgent` over a SQLite database  
    - `RadiologyAgent` over a CSV report log  
    - `EHRAgent` over JSON clinical notes  
@@ -129,7 +129,7 @@ This pipeline is implemented as a `SequentialAgent` composed of four LlmAgents.
 
 2. **Phase 1: CaseAgent (Hierarchical Multi Agent)**
 
-   - **Parallel specialist squad** implemented with `ParallelAgent`: :contentReference[oaicite:11]{index=11}  
+   - **Parallel specialist squad** implemented with `ParallelAgent`:  
      - `EHRAgent`
      - `PathologyAgent`
      - `RadiologyAgent`
@@ -139,13 +139,13 @@ This pipeline is implemented as a `SequentialAgent` composed of four LlmAgents.
 
 3. **Phase 2: GenomicsIntelligenceAgent (Sequential Pipeline)**
 
-   - `MutationInterpreter` → `ClinicalTrialMatcher` → `EvidenceSearcher` → `GenomicsSynthesizer`, each an LlmAgent, wrapped in a `SequentialAgent`. :contentReference[oaicite:12]{index=12}  
+   - `MutationInterpreter` → `ClinicalTrialMatcher` → `EvidenceSearcher` → `GenomicsSynthesizer`, each an LlmAgent, wrapped in a `SequentialAgent`.
 
 4. **Streamlit UI**
 
-   - `1_🏠_Welcome.py` – narrative overview, architecture and metrics. :contentReference[oaicite:13]{index=13}  
-   - `2_📈_Live_Execution.py` – runs Phase 1, shows logs and dashboard. :contentReference[oaicite:14]{index=14}  
-   - `3_🧬_Genomics_Insights.py` – runs both phases for a selected patient and visualises mutations, treatments and trials. :contentReference[oaicite:15]{index=15}  
+   - `1_🏠_Welcome.py` – narrative overview, architecture and metrics.  
+   - `2_📈_Live_Execution.py` – runs Phase 1, shows logs and dashboard.  
+   - `3_🧬_Genomics_Insights.py` – runs both phases for a selected patient and visualises mutations, treatments and trials.   
 
 ### Agent interaction diagram
 
@@ -392,12 +392,12 @@ Metrics are written to `evaluation/core_eval_metrics.json`.
 ```text
 CORE-adk-capstone/
 ├── 1_🏠_Welcome.py                # Streamlit landing page (narrative + metrics)
-├── 2_📈_Live_Execution.py         # Phase 1 live execution UI :contentReference[oaicite:34]{index=34}
-├── 3_🧬_Genomics_Insights.py      # Phase 2 genomics UI :contentReference[oaicite:35]{index=35}
+├── 2_📈_Live_Execution.py         # Phase 1 live execution UI 
+├── 3_🧬_Genomics_Insights.py      # Phase 2 genomics UI 
 ├── agents/
-│   ├── coordinator.py             # Deterministic CoordinatorAgent :contentReference[oaicite:36]{index=36}
-│   ├── case_agent.py              # CaseAgent with Parallel + Sequential pipeline :contentReference[oaicite:37]{index=37}
-│   └── genomics_intelligence.py   # GenomicsIntelligenceAgent sequential pipeline :contentReference[oaicite:38]{index=38}
+│   ├── coordinator.py             # Deterministic CoordinatorAgent 
+│   ├── case_agent.py              # CaseAgent with Parallel + Sequential pipeline 
+│   └── genomics_intelligence.py   # GenomicsIntelligenceAgent sequential pipeline 
 ├── tools/
 │   ├── clinical_trials_api.py     # ClinicalTrials.gov integration
 │   └── pubmed_api.py              # PubMed E utilities integration
@@ -408,13 +408,13 @@ CORE-adk-capstone/
 │   ├── genomics_data.json         # Genomic mutation profiles
 │   └── mdt_roster_2025-11-18.json # MDT roster
 ├── evaluation/
-│   ├── core_evaluation.py         # Behavioural evaluation script :contentReference[oaicite:39]{index=39}
-│   ├── mdt_eval_labels.json       # Ground truth labels :contentReference[oaicite:40]{index=40}
-│   └── core_eval_metrics.json     # Evaluation outputs :contentReference[oaicite:41]{index=41}
+│   ├── core_evaluation.py         # Behavioural evaluation script
+│   ├── mdt_eval_labels.json       # Ground truth labels 
+│   └── core_eval_metrics.json     # Evaluation outputs
 ├── output/                        # Generated dashboards and reports
 ├── scripts/
 │   └── setup_mock_data.py         # Helper to create mock_db
-├── assets/                        # Logos and hero image for Streamlit UI :contentReference[oaicite:42]{index=42}
+├── assets/                        # Logos and hero image for Streamlit UI 
 ├── requirements.txt               # Python dependencies
 ├── .env.example                   # Environment variable template
 └── README.md                      # This file
