@@ -20,9 +20,7 @@ def search_clinical_trials(
     genes: str = "",
     mutation: str = "",
     cancer_type: str = "breast cancer",
-    max_results: int = 10,
-    phase: Optional[List[str]] = None,    # Use Optional instead of |
-    status: Optional[List[str]] = None
+    max_results: int = 10
 ) -> str:
     """
     Search ClinicalTrials.gov for trials matching genetic criteria.
@@ -80,14 +78,6 @@ def search_clinical_trials(
             "format": "json"
         }
         
-        # Add phase filter if specified
-        if phase:
-            # API v2 uses query.phase parameter
-            params["filter.overallStatus"] = ",".join(phase)
-        
-        # Add status filter if specified
-        if status:
-            params["filter.overallStatus"] = ",".join(status)
         
         logger.info(f"Searching ClinicalTrials.gov: {search_query}")
         logger.debug(f"API parameters: {params}")
@@ -151,9 +141,7 @@ def search_clinical_trials(
             "search_parameters": {
                 "genes": genes,
                 "mutation": mutation,
-                "cancer_type": cancer_type,
-                "phase": phase,
-                "status": status
+                "cancer_type": cancer_type
             }
         }
         
