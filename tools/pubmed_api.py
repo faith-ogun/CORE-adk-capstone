@@ -26,7 +26,8 @@ Entrez.email = ENTREZ_EMAIL
 
 def search_pubmed_literature(
     query: str,
-    max_results: int = 5
+    max_results: int = 5,
+    search_type: str = "general"   
 ) -> str:
     """
     Search PubMed for genomics and cancer treatment literature.
